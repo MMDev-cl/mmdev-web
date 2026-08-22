@@ -1,0 +1,28 @@
+{
+  "name": "mmdev-web",
+  "version": "1.0.0",
+  "description": "Official website and technical presence of MM Dev, the technology brand of Manuel Matus Development SpA.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MMDev-cl/mmdev-web.git"
+  },
+  "keywords": [],
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/MMDev-cl/mmdev-web/issues"
+  },
+  "homepage": "https://github.com/MMDev-cl/mmdev-web#readme",
+  "dependencies": {
+    "astro": "^7.2.4"
+  },
+  "private": "true",
+  "engines": {
+    "node": ">=24 <25"
+  }
+}
