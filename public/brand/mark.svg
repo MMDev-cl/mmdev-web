@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title description">
+  <title id="title">MM Dev</title>
+  <desc id="description">Símbolo geométrico con las iniciales MM</desc>
+  <rect width="64" height="64" rx="4" fill="#0b1829"/>
+  <path d="M11 44V20l9 13 9-13v24M35 44V20l9 13 9-13v24" fill="none" stroke="#f7fafc" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"/>
+  <path d="M29 44V20" fill="none" stroke="#68a2e3" stroke-width="4"/>
+</svg>

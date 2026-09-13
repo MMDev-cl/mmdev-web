@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f4f7fa"/>
+  <path d="M0 80H1200M0 160H1200M0 240H1200M0 320H1200M0 400H1200M0 480H1200M0 560H1200M80 0V630M160 0V630M240 0V630M320 0V630M400 0V630M480 0V630M560 0V630M640 0V630M720 0V630M800 0V630M880 0V630M960 0V630M1040 0V630M1120 0V630" stroke="#d5dee8" stroke-width="1"/>
+  <rect x="80" y="80" width="1040" height="470" fill="#ffffff" stroke="#d5dee8"/>
+  <rect x="140" y="140" width="96" height="96" rx="6" fill="#0b1829"/>
+  <path d="M156 208v-40l14 21 14-21v40m10 0v-40l14 21 14-21v40" fill="none" stroke="#f7fafc" stroke-width="6"/>
+  <path d="M184 208v-40" stroke="#68a2e3" stroke-width="6"/>
+  <text x="272" y="205" fill="#0b1829" font-family="Arial, sans-serif" font-size="48" font-weight="700" letter-spacing="6">MM DEV</text>
+  <text x="140" y="335" fill="#101923" font-family="Arial, sans-serif" font-size="56" font-weight="700">Tecnología diseñada para</text>
+  <text x="140" y="405" fill="#101923" font-family="Arial, sans-serif" font-size="56" font-weight="700">operar, integrarse y crecer.</text>
+  <text x="140" y="480" fill="#526173" font-family="Arial, sans-serif" font-size="28">Desarrollo de software e infraestructura digital</text>
+  <rect x="140" y="514" width="180" height="6" fill="#1f5fae"/>
+</svg>

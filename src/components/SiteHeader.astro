@@ -1,0 +1,124 @@
+---
+import Brand from './Brand.astro';
+import { siteConfig } from '../config/site.config';
+---
+
+<header class="site-header">
+  <div class="site-header__inner container">
+    <a
+      class="site-header__brand"
+      href="/"
+      aria-label="MM Dev, volver al inicio"
+    >
+      <Brand />
+    </a>
+
+    <nav class="site-header__nav" aria-label="Navegación principal">
+      {siteConfig.navigation.map((item) => (
+        <a href={item.href}>{item.label}</a>
+      ))}
+    </nav>
+
+    <a class="site-header__contact" href="/#contacto">
+      Contactar
+    </a>
+
+    <details class="site-header__menu">
+      <summary>Menú</summary>
+      <nav aria-label="Navegación móvil">
+        {siteConfig.navigation.map((item) => (
+          <a href={item.href}>{item.label}</a>
+        ))}
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    z-index: 20;
+    inset-block-start: 0;
+    border-bottom: 1px solid rgb(213 222 232 / 82%);
+    background: rgb(255 255 255 / 92%);
+    backdrop-filter: blur(14px);
+  }
+
+  .site-header__inner {
+    display: grid;
+    min-height: 4.75rem;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .site-header__brand,
+  .site-header__nav a,
+  .site-header__contact,
+  .site-header__menu a {
+    text-decoration: none;
+  }
+
+  .site-header__nav {
+    display: flex;
+    justify-content: center;
+    gap: clamp(1rem, 3vw, 2rem);
+  }
+
+  .site-header__nav a {
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .site-header__nav a:hover {
+    color: var(--color-blue-dark);
+  }
+
+  .site-header__contact {
+    padding-block: 0.4rem;
+    border-bottom: 1px solid var(--color-blue);
+    color: var(--color-navy);
+    font-weight: 700;
+  }
+
+  .site-header__menu {
+    display: none;
+  }
+
+  @media (max-width: 52rem) {
+    .site-header__inner {
+      grid-template-columns: 1fr auto;
+    }
+    .site-header__nav,
+    .site-header__contact {
+      display: none;
+    }
+    .site-header__menu {
+      position: relative;
+      display: block;
+    }
+    .site-header__menu summary {
+      cursor: pointer;
+      color: var(--color-navy);
+      font-weight: 700;
+    }
+    .site-header__menu nav {
+      position: absolute;
+      inset-block-start: 2.5rem;
+      inset-inline-end: 0;
+      display: grid;
+      width: min(18rem, calc(100vw - 1.25rem));
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      box-shadow: 0 1rem 2rem rgb(11 24 41 / 12%);
+    }
+    .site-header__menu a {
+      padding: 0.9rem 1rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .site-header__menu a:last-child {
+      border-bottom: 0;
+    }
+  }
+</style>

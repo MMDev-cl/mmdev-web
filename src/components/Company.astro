@@ -1,0 +1,70 @@
+---
+import { siteConfig } from '../config/site.config';
+---
+
+<section class="company section" id="empresa" aria-labelledby="company-title">
+  <div class="company__layout container">
+    <div>
+      <p class="eyebrow">{siteConfig.company.eyebrow}</p>
+      <h2 id="company-title">{siteConfig.company.title}</h2>
+      <p class="company__description">{siteConfig.company.description}</p>
+    </div>
+    <ul class="company__principles">
+      {siteConfig.company.principles.map((principle, index) => (
+        <li>
+          <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          {principle}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .company {
+    background: var(--color-navy);
+    color: var(--color-on-dark);
+  }
+  .company h2 {
+    color: var(--color-on-dark);
+  }
+  .company .eyebrow {
+    color: #8bb7e8;
+  }
+  .company__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+    gap: clamp(3rem, 8vw, 8rem);
+    align-items: start;
+  }
+  .company__description {
+    max-width: 46rem;
+    margin-block-end: 0;
+    color: #bdcad8;
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+  }
+  .company__principles {
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid #304158;
+    list-style: none;
+  }
+  .company__principles li {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 0.75rem;
+    padding-block: 1.25rem;
+    border-bottom: 1px solid #304158;
+  }
+  .company__principles span {
+    color: #8bb7e8;
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  @media (max-width: 48rem) {
+    .company__layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

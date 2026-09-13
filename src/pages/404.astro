@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Brand from '../components/Brand.astro';
+---
+
+<BaseLayout
+  title="Página no encontrada | MM Dev"
+  description="La página solicitada no existe."
+  noindex
+>
+  <main class="not-found">
+    <a href="/" aria-label="Ir al inicio de MM Dev">
+      <Brand />
+    </a>
+    <p class="eyebrow">Error 404</p>
+    <h1>Página no encontrada.</h1>
+    <p class="lead">
+      La dirección puede haber cambiado o ya no estar disponible.
+    </p>
+    <a class="button button--primary" href="/">
+      Volver al inicio
+    </a>
+  </main>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: grid;
+    width: min(calc(100% - 2rem), 48rem);
+    min-height: 100vh;
+    margin-inline: auto;
+    align-content: center;
+    justify-items: start;
+  }
+  .not-found > a:first-child {
+    margin-block-end: 4rem;
+    text-decoration: none;
+  }
+</style>

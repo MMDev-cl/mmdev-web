@@ -1,0 +1,45 @@
+---
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+---
+
+<span class="brand" aria-label="MM Dev">
+  <svg class="brand__mark" viewBox="0 0 64 64" aria-hidden="true">
+    <rect width="64" height="64" rx="4" fill="currentColor"></rect>
+    <path
+      d="M11 44V20l9 13 9-13v24M35 44V20l9 13 9-13v24"
+      fill="none"
+      stroke="#f7fafc"
+      stroke-width="4"
+      stroke-linecap="square"
+      stroke-linejoin="miter"
+    ></path>
+    <path d="M29 44V20" fill="none" stroke="#68a2e3" stroke-width="4"></path>
+  </svg>
+  {!compact && <span class="brand__name">MM DEV</span>}
+</span>
+
+<style>
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--color-navy);
+  }
+
+  .brand__mark {
+    width: 2.4rem;
+    height: 2.4rem;
+    flex: 0 0 auto;
+  }
+
+  .brand__name {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+  }
+</style>

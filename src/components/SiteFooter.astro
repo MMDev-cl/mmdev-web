@@ -1,0 +1,92 @@
+---
+import Brand from './Brand.astro';
+import { siteConfig } from '../config/site.config';
+
+const year = new Date().getUTCFullYear();
+---
+
+<footer class="site-footer">
+  <div class="site-footer__top container">
+    <div>
+      <Brand />
+      <p>{siteConfig.brand.tagline}</p>
+    </div>
+    <div class="site-footer__links">
+      <nav aria-label="Navegación del pie">
+        {siteConfig.navigation.map((item) => (
+          <a href={item.href}>{item.label}</a>
+        ))}
+        <a href="/privacidad/">Privacidad</a>
+      </nav>
+      <a href={`mailto:${siteConfig.contact.email}`}>
+        {siteConfig.contact.email}
+      </a>
+    </div>
+  </div>
+  <div class="site-footer__bottom container">
+    <span>
+      © {year} {siteConfig.brand.legalName}
+    </span>
+    <span>{siteConfig.brand.country}</span>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+  .site-footer__top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding-block: 3rem;
+  }
+  .site-footer__top p {
+    max-width: 30rem;
+    margin: 1rem 0 0;
+    color: var(--color-muted);
+  }
+  .site-footer__links {
+    display: grid;
+    justify-items: end;
+    gap: 1.25rem;
+  }
+  .site-footer__links nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 1rem 1.5rem;
+  }
+  .site-footer__links a {
+    color: var(--color-muted);
+    text-decoration-color: var(--color-border);
+    text-underline-offset: 0.2rem;
+  }
+  .site-footer__links a:hover {
+    color: var(--color-blue-dark);
+  }
+  .site-footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1.1rem;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-muted);
+    font-size: 0.8rem;
+  }
+  @media (max-width: 40rem) {
+    .site-footer__top {
+      grid-template-columns: 1fr;
+    }
+    .site-footer__links {
+      justify-items: start;
+    }
+    .site-footer__links nav {
+      justify-content: flex-start;
+    }
+    .site-footer__bottom {
+      flex-direction: column;
+    }
+  }
+</style>

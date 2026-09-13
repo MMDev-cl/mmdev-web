@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { siteConfig } from '../config/site.config';
+---
+
+<BaseLayout
+  title="Aviso de privacidad | MM Dev"
+  description="Información sobre el uso de los datos enviados mediante el formulario de contacto de MM Dev."
+>
+  <SiteHeader />
+  <main class="privacy" id="contenido-principal">
+    <div class="container privacy__content">
+      <p class="eyebrow">Información</p>
+      <h1>Aviso de privacidad</h1>
+      <p class="lead">
+        Este aviso explica cómo {siteConfig.brand.legalName} utiliza la
+        información enviada mediante el formulario de contacto de mmdev.cl.
+      </p>
+
+      <h2>Datos recopilados</h2>
+      <p>
+        El formulario solicita nombre, correo, empresa, área de interés, mensaje
+        y, opcionalmente, teléfono. No solicitamos contraseñas, información
+        bancaria ni credenciales de acceso.
+      </p>
+
+      <h2>Finalidad</h2>
+      <p>
+        La información se utiliza para evaluar y responder la consulta,
+        coordinar una conversación comercial o técnica y mantener el registro
+        necesario de esa comunicación.
+      </p>
+
+      <h2>Servicios utilizados</h2>
+      <p>
+        El formulario emplea Cloudflare para su publicación y protección
+        antispam, y un proveedor transaccional de correo para entregar el
+        mensaje a nuestro buzón corporativo. Las credenciales y la configuración
+        de estos servicios no se exponen públicamente.
+      </p>
+
+      <h2>Conservación y solicitudes</h2>
+      <p>
+        Los datos se conservan sólo mientras resulten necesarios para gestionar
+        la consulta y la relación que pueda originarse. Puede solicitar acceso,
+        corrección o eliminación escribiendo a{' '}
+        <a href={`mailto:${siteConfig.contact.email}`}>
+          {siteConfig.contact.email}
+        </a>
+        .
+      </p>
+
+      <h2>Contacto</h2>
+      <p>
+        Responsable: {siteConfig.brand.legalName}. Correo:{' '}
+        <a href={`mailto:${siteConfig.contact.email}`}>
+          {siteConfig.contact.email}
+        </a>
+        .
+      </p>
+
+      <p class="privacy__updated">
+        Última actualización: 13 de septiembre de 2026.
+      </p>
+    </div>
+  </main>
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+  .privacy {
+    padding-block: clamp(4rem, 9vw, 7rem);
+  }
+  .privacy__content {
+    max-width: var(--container-narrow);
+  }
+  .privacy h1 {
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+  }
+  .privacy h2 {
+    margin-block-start: 3rem;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+  }
+  .privacy a {
+    color: var(--color-blue-dark);
+    text-underline-offset: 0.2rem;
+  }
+  .privacy__updated {
+    margin-block-start: 4rem;
+    color: var(--color-muted);
+    font-size: 0.875rem;
+  }
+</style>

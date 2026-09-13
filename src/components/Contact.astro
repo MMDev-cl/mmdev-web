@@ -1,0 +1,340 @@
+---
+import { siteConfig } from '../config/site.config';
+
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+---
+
+<section
+  class="contact section section--surface"
+  id="contacto"
+  aria-labelledby="contact-title"
+>
+  <div class="contact__layout container">
+    <div class="contact__intro">
+      <p class="eyebrow">Contacto</p>
+      <h2 id="contact-title">{siteConfig.contact.title}</h2>
+      <p class="lead">{siteConfig.contact.description}</p>
+      <a class="contact__email" href={`mailto:${siteConfig.contact.email}`}>
+        {siteConfig.contact.email}
+      </a>
+    </div>
+
+    <form
+      class="contact-form"
+      action="/api/contact"
+      method="post"
+      data-contact-form
+    >
+      <div class="contact-form__field">
+        <label for="name">Nombre y apellido</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          autocomplete="name"
+          maxlength="100"
+          required
+        />
+      </div>
+      <div class="contact-form__field">
+        <label for="email">Correo</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          maxlength="160"
+          required
+        />
+      </div>
+      <div class="contact-form__field">
+        <label for="company">Empresa</label>
+        <input
+          id="company"
+          name="company"
+          type="text"
+          autocomplete="organization"
+          maxlength="120"
+          required
+        />
+      </div>
+      <div class="contact-form__field">
+        <label for="phone">
+          Teléfono <span>(opcional)</span>
+        </label>
+        <input
+          id="phone"
+          name="phone"
+          type="tel"
+          autocomplete="tel"
+          maxlength="40"
+        />
+      </div>
+      <div class="contact-form__field contact-form__field--wide">
+        <label for="service">Área de interés</label>
+        <select id="service" name="service" required>
+          <option value="">Seleccione una opción</option>
+          {siteConfig.contact.serviceOptions.map((option) => (
+            <option value={option}>{option}</option>
+          ))}
+        </select>
+      </div>
+      <div class="contact-form__field contact-form__field--wide">
+        <label for="message">¿Qué necesita implementar o mejorar?</label>
+        <textarea
+          id="message"
+          name="message"
+          rows="6"
+          minlength="20"
+          maxlength="3000"
+          required
+        ></textarea>
+        <small>
+          Incluya el contexto principal, el resultado esperado y cualquier plazo
+          relevante.
+        </small>
+      </div>
+
+      <div class="contact-form__trap" aria-hidden="true">
+        <label for="website">Sitio web</label>
+        <input
+          id="website"
+          name="website"
+          type="text"
+          autocomplete="off"
+          tabindex="-1"
+        />
+      </div>
+
+      <label class="contact-form__consent">
+        <input name="consent" type="checkbox" required />
+        <span>
+          Acepto que MM Dev utilice estos datos únicamente para responder esta
+          consulta, según el <a href="/privacidad/">aviso de privacidad</a>.
+        </span>
+      </label>
+
+      {turnstileSiteKey ? (
+        <div
+          class="cf-turnstile"
+          data-sitekey={turnstileSiteKey}
+          data-theme="light"
+          data-action="contact"
+        ></div>
+      ) : (
+        <p class="contact-form__setup" role="note">
+          El envío web se habilitará al configurar la protección antispam.
+          Mientras tanto puede escribir a{' '}
+          <a href={`mailto:${siteConfig.contact.email}`}>
+            {siteConfig.contact.email}
+          </a>
+          .
+        </p>
+      )}
+
+      <div class="contact-form__footer">
+        <button
+          class="button button--primary"
+          type="submit"
+          disabled={!turnstileSiteKey}
+        >
+          Enviar consulta <span aria-hidden="true">→</span>
+        </button>
+        <p
+          class="contact-form__status"
+          role="status"
+          aria-live="polite"
+          data-form-status
+        ></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+{turnstileSiteKey && (
+  <script
+    is:inline
+    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+    async
+    defer
+  ></script>
+)}
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  const status = document.querySelector<HTMLElement>('[data-form-status]');
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!status || !form.reportValidity()) return;
+
+    const button = form.querySelector<HTMLButtonElement>(
+      'button[type="submit"]',
+    );
+    const payload = Object.fromEntries(new FormData(form).entries());
+
+    status.dataset.state = 'loading';
+    status.textContent = 'Enviando consulta…';
+    if (button) button.disabled = true;
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = (await response.json()) as { message?: string };
+      if (!response.ok)
+        throw new Error(result.message || 'No fue posible enviar la consulta.');
+
+      form.reset();
+      status.dataset.state = 'success';
+      status.textContent =
+        result.message || 'Consulta enviada. Le responderemos a la brevedad.';
+      window.turnstile?.reset();
+    } catch (error) {
+      status.dataset.state = 'error';
+      status.textContent =
+        error instanceof Error
+          ? error.message
+          : 'No fue posible enviar la consulta.';
+    } finally {
+      if (button) button.disabled = false;
+    }
+  });
+</script>
+
+<style>
+  .contact__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(24rem, 1.2fr);
+    gap: clamp(3rem, 8vw, 8rem);
+    align-items: start;
+  }
+  .contact__intro {
+    position: sticky;
+    inset-block-start: 7rem;
+  }
+  .contact__email {
+    display: inline-block;
+    margin-block-start: 1.25rem;
+    color: var(--color-blue-dark);
+    font-weight: 700;
+    text-underline-offset: 0.25rem;
+  }
+  .contact-form {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.1rem;
+    padding: clamp(1.25rem, 4vw, 2.25rem);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+  .contact-form__field {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .contact-form__field--wide,
+  .contact-form__consent,
+  .contact-form__setup,
+  .cf-turnstile,
+  .contact-form__footer {
+    grid-column: 1 / -1;
+  }
+  .contact-form label {
+    color: var(--color-navy);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .contact-form label span,
+  .contact-form small {
+    color: var(--color-muted);
+    font-weight: 400;
+  }
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-control);
+    background: var(--color-background);
+    color: var(--color-ink);
+  }
+  .contact-form textarea {
+    resize: vertical;
+  }
+  .contact-form input:focus,
+  .contact-form select:focus,
+  .contact-form textarea:focus {
+    border-color: var(--color-blue);
+    outline: 2px solid rgb(31 95 174 / 16%);
+    outline-offset: 0;
+  }
+  .contact-form__consent {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.65rem;
+    align-items: start;
+  }
+  .contact-form__consent input {
+    width: 1.15rem;
+    min-height: 1.15rem;
+    margin-top: 0.2rem;
+  }
+  .contact-form__consent span {
+    color: var(--color-muted);
+  }
+  .contact-form__trap {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    clip-path: inset(50%);
+  }
+  .contact-form__setup {
+    margin: 0;
+    padding: 0.85rem;
+    border-left: 3px solid var(--color-blue);
+    background: var(--color-blue-soft);
+    color: var(--color-muted);
+  }
+  .contact-form__footer {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: center;
+  }
+  .contact-form__status {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  .contact-form__status[data-state='success'] {
+    color: var(--color-success);
+  }
+  .contact-form__status[data-state='error'] {
+    color: var(--color-error);
+  }
+  @media (max-width: 52rem) {
+    .contact__layout {
+      grid-template-columns: 1fr;
+    }
+    .contact__intro {
+      position: static;
+    }
+  }
+  @media (max-width: 36rem) {
+    .contact-form {
+      grid-template-columns: 1fr;
+    }
+    .contact-form__footer {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
