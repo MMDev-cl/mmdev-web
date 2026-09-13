@@ -1,0 +1,24 @@
+:root {
+  color-scheme: light;
+  --color-navy: #0b1829;
+  --color-navy-soft: #13243a;
+  --color-blue: #1f5fae;
+  --color-blue-dark: #184b89;
+  --color-blue-soft: #e7f0fa;
+  --color-background: #f4f7fa;
+  --color-surface: #ffffff;
+  --color-ink: #101923;
+  --color-muted: #526173;
+  --color-border: #d5dee8;
+  --color-on-dark: #f7fafc;
+  --color-success: #176b45;
+  --color-error: #a83232;
+  --font-heading:
+    'IBM Plex Sans Variable', 'IBM Plex Sans', ui-sans-serif, system-ui,
+    sans-serif;
+  --font-body: 'Inter Variable', Inter, ui-sans-serif, system-ui, sans-serif;
+  --container: 72rem;
+  --container-narrow: 48rem;
+  --radius-control: 0.25rem;
+  --radius-surface: 0.5rem;
+}

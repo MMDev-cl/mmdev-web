@@ -1,0 +1,72 @@
+---
+import { siteConfig } from '../config/site.config';
+---
+
+<section class="section" id="metodo" aria-labelledby="method-title">
+  <div class="container method__layout">
+    <div class="section-heading method__heading">
+      <p class="eyebrow">Cómo trabajamos</p>
+      <h2 id="method-title">De la necesidad a una operación sostenible.</h2>
+      <p class="lead">
+        Cada implementación debe ser comprensible, verificable y capaz de
+        evolucionar sin perder el control.
+      </p>
+    </div>
+    <ol class="method__steps">
+      {siteConfig.method.map((step) => (
+        <li>
+          <span>{step.number}</span>
+          <div>
+            <h3>{step.title}</h3>
+            <p>{step.description}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .method__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(20rem, 1.2fr);
+    gap: clamp(3rem, 8vw, 8rem);
+    align-items: start;
+  }
+  .method__heading {
+    position: sticky;
+    inset-block-start: 7rem;
+  }
+  .method__steps {
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--color-border);
+    list-style: none;
+  }
+  .method__steps li {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1rem;
+    padding-block: 1.75rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .method__steps li > span {
+    color: var(--color-blue-dark);
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+  .method__steps p {
+    margin-block-end: 0;
+    color: var(--color-muted);
+  }
+  @media (max-width: 48rem) {
+    .method__layout {
+      grid-template-columns: 1fr;
+    }
+    .method__heading {
+      position: static;
+    }
+  }
+</style>

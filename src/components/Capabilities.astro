@@ -1,0 +1,76 @@
+---
+import { siteConfig } from '../config/site.config';
+---
+
+<section
+  class="section section--surface"
+  id="capacidades"
+  aria-labelledby="capabilities-title"
+>
+  <div class="container">
+    <div class="section-heading">
+      <p class="eyebrow">Capacidades</p>
+      <h2 id="capabilities-title">Una base tecnológica completa.</h2>
+      <p class="lead">
+        Conectamos desarrollo, plataformas e infraestructura para que la
+        solución funcione como un sistema, no como piezas aisladas.
+      </p>
+    </div>
+    <div class="capabilities__grid">
+      {siteConfig.capabilities.map((capability) => (
+        <article class="capability">
+          <span class="capability__number" aria-hidden="true">
+            {capability.number}
+          </span>
+          <h3>{capability.title}</h3>
+          <p>{capability.description}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .capabilities__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-block: 1px solid var(--color-border);
+    border-inline-start: 1px solid var(--color-border);
+  }
+  .capability {
+    min-height: 15rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border-inline-end: 1px solid var(--color-border);
+    border-block-end: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+  .capability__number {
+    display: block;
+    margin-block-end: 3rem;
+    color: var(--color-blue-dark);
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+  .capability p {
+    margin-block-end: 0;
+    color: var(--color-muted);
+  }
+  @media (max-width: 52rem) {
+    .capabilities__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 36rem) {
+    .capabilities__grid {
+      grid-template-columns: 1fr;
+    }
+    .capability {
+      min-height: auto;
+    }
+    .capability__number {
+      margin-block-end: 1.75rem;
+    }
+  }
+</style>

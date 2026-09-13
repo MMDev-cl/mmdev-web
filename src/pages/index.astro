@@ -1,13 +1,22 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import Hero from '../components/Hero.astro';
+import Capabilities from '../components/Capabilities.astro';
+import Method from '../components/Method.astro';
+import Company from '../components/Company.astro';
+import Contact from '../components/Contact.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 ---
 
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>MM Dev</title>
-  </head>
-  <body>
-    <h1>MM Dev</h1>
-  </body>
-</html>
+<BaseLayout>
+  <SiteHeader />
+  <main id="contenido-principal">
+    <Hero />
+    <Capabilities />
+    <Method />
+    <Company />
+    <Contact />
+  </main>
+  <SiteFooter />
+</BaseLayout>

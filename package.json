@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "Official website and technical presence of MM Dev, the technology brand of Manuel Matus Development SpA.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "check": "astro check",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "preview": "astro preview",
+    "validate": "npm run format:check && npm run check && npm run build"
   },
   "repository": {
     "type": "git",
@@ -17,12 +20,22 @@
   "bugs": {
     "url": "https://github.com/MMDev-cl/mmdev-web/issues"
   },
-  "homepage": "https://github.com/MMDev-cl/mmdev-web#readme",
+  "homepage": "https://mmdev.cl",
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/ibm-plex-sans": "^5.3.0",
+    "@fontsource-variable/inter": "^5.3.0",
     "astro": "^7.2.4"
   },
-  "private": "true",
+  "private": true,
   "engines": {
     "node": ">=24 <25"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@cloudflare/workers-types": "^5.20260911.1",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^1.0.0",
+    "typescript": "^6.0.3"
   }
 }
