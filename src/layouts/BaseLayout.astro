@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import GoogleTagManager from '../components/GoogleTagManager.astro';
+import PrivacyPreferences from '../components/PrivacyPreferences.astro';
 import { siteConfig } from '../config/site.config';
 
 interface Props {
@@ -36,6 +38,7 @@ const structuredData = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <GoogleTagManager />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <meta
@@ -78,5 +81,6 @@ const structuredData = {
       Ir al contenido principal
     </a>
     <slot />
+    <PrivacyPreferences />
   </body>
 </html>
