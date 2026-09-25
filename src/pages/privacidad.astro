@@ -7,7 +7,7 @@ import { siteConfig } from '../config/site.config';
 
 <BaseLayout
   title="Aviso de privacidad | MM Dev"
-  description="Información sobre el uso de los datos enviados mediante el formulario de contacto de MM Dev."
+  description="Información sobre el uso de analítica y de los datos enviados mediante el formulario de contacto de MM Dev."
 >
   <SiteHeader />
   <main class="privacy" id="contenido-principal">
@@ -16,10 +16,55 @@ import { siteConfig } from '../config/site.config';
       <h1>Aviso de privacidad</h1>
       <p class="lead">
         Este aviso explica cómo {siteConfig.brand.legalName} utiliza la
-        información enviada mediante el formulario de contacto de mmdev.cl.
+        analítica opcional y la información enviada mediante el formulario de
+        contacto de mmdev.cl.
       </p>
 
-      <h2>Datos recopilados</h2>
+      <h2>Analítica opcional</h2>
+      <p>
+        Utilizamos Google Tag Manager como gestor técnico de etiquetas. El
+        contenedor y Google Analytics 4 sólo se activan después de que usted
+        acepte expresamente la analítica. Su finalidad es obtener métricas
+        agregadas sobre la navegación y el rendimiento del sitio para entender
+        su uso y detectar oportunidades de mejora.
+      </p>
+      <p>
+        La publicidad, el remarketing y la personalización publicitaria
+        permanecen desactivados. Rechazar la analítica no limita el acceso al
+        contenido ni al formulario de contacto.
+      </p>
+
+      <h2>Su decisión de privacidad</h2>
+      <p>
+        La decisión se guarda principalmente en el almacenamiento local de su
+        navegador durante un máximo de 180 días. Al rechazar, también se guarda
+        una cookie técnica de primera parte con un valor no identificable. Esta
+        cookie sólo permite recordar la denegación de forma segura si el
+        almacenamiento local no está disponible; no es una cookie analítica ni
+        publicitaria.
+      </p>
+      <p>
+        Puede cambiar la decisión en cualquier momento mediante el botón
+        <strong>Preferencias de privacidad</strong> disponible en el pie del
+        sitio. El cambio se comunica, cuando el navegador lo permite, a las
+        demás pestañas abiertas del mismo sitio.
+      </p>
+      <p>
+        Al revocar una autorización previa, el sitio desactiva inmediatamente la
+        analítica, intenta eliminar las cookies analíticas accesibles y recarga
+        la página para detener el contenedor que ya se hubiera cargado.
+      </p>
+
+      <h2>Procesamiento por Google</h2>
+      <p>
+        Cuando la analítica está autorizada, Google puede procesar información
+        técnica relacionada con la visita conforme a sus términos y políticas
+        aplicables. El identificador de medición se administra externamente en
+        Google Tag Manager y no se inserta directamente en las páginas de este
+        sitio.
+      </p>
+
+      <h2>Datos del formulario de contacto</h2>
       <p>
         El formulario solicita nombre, correo, empresa, área de interés, mensaje
         y, opcionalmente, teléfono. No solicitamos contraseñas, información
@@ -62,7 +107,7 @@ import { siteConfig } from '../config/site.config';
       </p>
 
       <p class="privacy__updated">
-        Última actualización: 13 de septiembre de 2026.
+        Última actualización: 20 de septiembre de 2026.
       </p>
     </div>
   </main>

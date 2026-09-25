@@ -1,0 +1,430 @@
+---
+import { measurementConfig } from '../config/measurement.config';
+
+const {
+  gtmContainerId,
+  consentStorageKey,
+  consentSchemaVersion,
+  consentMaxAgeDays,
+  denialTombstoneName,
+  consentBroadcastChannel,
+  preferencesOpenEvent,
+  consentChangeEvent,
+} = measurementConfig;
+---
+
+<script
+  is:inline
+  define:vars={{
+    gtmContainerId,
+    consentStorageKey,
+    consentSchemaVersion,
+    consentMaxAgeDays,
+    denialTombstoneName,
+    consentBroadcastChannel,
+    preferencesOpenEvent,
+    consentChangeEvent,
+  }}
+>
+  (() => {
+    const deniedConsent = Object.freeze({
+      analytics_storage: 'denied',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+    });
+    const consentMaxAgeMilliseconds = consentMaxAgeDays * 24 * 60 * 60 * 1000;
+    const consentMaxAgeSeconds = consentMaxAgeDays * 24 * 60 * 60;
+    const secureCookieAttribute =
+      window.location.protocol === 'https:' ? '; Secure' : '';
+    const hostname = window.location.hostname.toLowerCase().replace(/\.$/, '');
+    const isMmdevHostname =
+      hostname === 'mmdev.cl' || hostname.endsWith('.mmdev.cl');
+
+    window.dataLayer = window.dataLayer || [];
+    window.gtag =
+      window.gtag ||
+      function () {
+        window.dataLayer.push(arguments);
+      };
+
+    const updateConsent = (analytics) => {
+      window.gtag('consent', 'update', {
+        ...deniedConsent,
+        analytics_storage: analytics,
+      });
+    };
+
+    window.gtag('consent', 'default', deniedConsent);
+
+    let currentDecision = null;
+    let gtmLoaded = false;
+    let reloadScheduled = false;
+    let preferencesOpenPending = false;
+
+    const readDenialTombstone = () => {
+      try {
+        return document.cookie
+          .split(';')
+          .map((cookie) => cookie.trim())
+          .some((cookie) => cookie === `${denialTombstoneName}=1`);
+      } catch {
+        return null;
+      }
+    };
+
+    const writeDenialTombstone = (maxAgeSeconds = consentMaxAgeSeconds) => {
+      try {
+        document.cookie = `${denialTombstoneName}=1; Max-Age=${maxAgeSeconds}; path=/; SameSite=Lax${secureCookieAttribute}`;
+        return readDenialTombstone() === true;
+      } catch {
+        return false;
+      }
+    };
+
+    const clearDenialTombstone = () => {
+      const expiredCookie = `${denialTombstoneName}=; Max-Age=0; path=/; SameSite=Lax${secureCookieAttribute}`;
+
+      try {
+        document.cookie = expiredCookie;
+
+        if (isMmdevHostname) {
+          document.cookie = `${expiredCookie}; Domain=.mmdev.cl`;
+        }
+
+        return readDenialTombstone() === false;
+      } catch {
+        return false;
+      }
+    };
+
+    const parseStoredConsent = (rawValue) => {
+      if (!rawValue) return null;
+
+      try {
+        const storedConsent = JSON.parse(rawValue);
+        const updatedAt = Date.parse(storedConsent.updatedAt);
+        const expiresAt = Date.parse(storedConsent.expiresAt);
+        const now = Date.now();
+        const isValid =
+          storedConsent !== null &&
+          typeof storedConsent === 'object' &&
+          storedConsent.version === consentSchemaVersion &&
+          (storedConsent.analytics === 'granted' ||
+            storedConsent.analytics === 'denied') &&
+          Number.isFinite(updatedAt) &&
+          Number.isFinite(expiresAt) &&
+          updatedAt <= now &&
+          expiresAt > now &&
+          expiresAt > updatedAt &&
+          expiresAt - updatedAt <= consentMaxAgeMilliseconds;
+
+        return isValid
+          ? { decision: storedConsent.analytics, expiresAt }
+          : null;
+      } catch {
+        return null;
+      }
+    };
+
+    const validateStoredConsent = (rawValue) =>
+      parseStoredConsent(rawValue)?.decision ?? null;
+
+    const readStoredConsent = () => {
+      try {
+        const rawValue = window.localStorage.getItem(consentStorageKey);
+        const storedConsent = parseStoredConsent(rawValue);
+        return {
+          available: true,
+          decision: storedConsent?.decision ?? null,
+          expiresAt: storedConsent?.expiresAt ?? null,
+          hasValue: rawValue !== null,
+        };
+      } catch {
+        return {
+          available: false,
+          decision: null,
+          expiresAt: null,
+          hasValue: false,
+        };
+      }
+    };
+
+    const clearStoredConsent = () => {
+      try {
+        window.localStorage.removeItem(consentStorageKey);
+        return window.localStorage.getItem(consentStorageKey) === null;
+      } catch {
+        return false;
+      }
+    };
+
+    const persistConsent = (analytics) => {
+      const updatedAt = new Date();
+      const storedConsent = JSON.stringify({
+        version: consentSchemaVersion,
+        analytics,
+        updatedAt: updatedAt.toISOString(),
+        expiresAt: new Date(
+          updatedAt.getTime() + consentMaxAgeMilliseconds,
+        ).toISOString(),
+      });
+
+      try {
+        window.localStorage.setItem(consentStorageKey, storedConsent);
+        return window.localStorage.getItem(consentStorageKey) === storedConsent;
+      } catch {
+        return false;
+      }
+    };
+
+    const ensureDeniedCanBeRestored = () => {
+      const existingTombstone = readDenialTombstone();
+      const tombstonePersisted =
+        existingTombstone === true ? true : writeDenialTombstone();
+      const storedConsent = readStoredConsent();
+      const storagePersisted =
+        storedConsent.available && storedConsent.decision === 'denied'
+          ? true
+          : persistConsent('denied');
+
+      return tombstonePersisted || storagePersisted;
+    };
+
+    const removeAnalyticsCookies = () => {
+      try {
+        const cookieNames = document.cookie
+          .split(';')
+          .map((cookie) => cookie.split('=', 1)[0]?.trim())
+          .filter(
+            (name) => name === '_ga' || Boolean(name?.startsWith('_ga_')),
+          );
+
+        for (const name of cookieNames) {
+          document.cookie = `${name}=; Max-Age=0; path=/; SameSite=Lax${secureCookieAttribute}`;
+
+          if (isMmdevHostname) {
+            document.cookie = `${name}=; Max-Age=0; path=/; Domain=${hostname}; SameSite=Lax${secureCookieAttribute}`;
+            document.cookie = `${name}=; Max-Age=0; path=/; Domain=.mmdev.cl; SameSite=Lax${secureCookieAttribute}`;
+          }
+        }
+      } catch {
+        // Cookie deletion is best-effort when browser storage is unavailable.
+      }
+    };
+
+    const loadGtm = () => {
+      if (
+        gtmLoaded ||
+        document.querySelector('script[data-mmdev-google-tag-manager]')
+      ) {
+        return;
+      }
+
+      gtmLoaded = true;
+      window.dataLayer.push({
+        'gtm.start': Date.now(),
+        event: 'gtm.js',
+      });
+
+      const script = document.createElement('script');
+      script.async = true;
+      script.dataset.mmdevGoogleTagManager = '';
+      script.src = `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(gtmContainerId)}`;
+      document.head.append(script);
+    };
+
+    const reloadOnce = () => {
+      if (reloadScheduled) return;
+      reloadScheduled = true;
+      window.location.reload();
+    };
+
+    let consentChannel = null;
+    try {
+      if ('BroadcastChannel' in window) {
+        consentChannel = new window.BroadcastChannel(consentBroadcastChannel);
+      }
+    } catch {
+      consentChannel = null;
+    }
+
+    const publishConsent = (analytics) => {
+      try {
+        consentChannel?.postMessage({
+          version: consentSchemaVersion,
+          analytics,
+        });
+      } catch {
+        // Synchronization is best-effort; local persistence remains authoritative.
+      }
+    };
+
+    const dispatchConsentChange = (analytics) => {
+      document.dispatchEvent(
+        new CustomEvent(consentChangeEvent, {
+          detail: { analytics },
+        }),
+      );
+    };
+
+    const applySynchronizedDenial = () => {
+      const denialRestorable = ensureDeniedCanBeRestored();
+      updateConsent('denied');
+      removeAnalyticsCookies();
+      currentDecision = denialRestorable ? 'denied' : null;
+      dispatchConsentChange('denied');
+
+      if (gtmLoaded && denialRestorable) reloadOnce();
+    };
+
+    const applySynchronizedGrant = () => {
+      const tombstoneState = readDenialTombstone();
+      const storedConsent = readStoredConsent();
+      if (
+        tombstoneState !== false ||
+        !storedConsent.available ||
+        storedConsent.decision !== 'granted'
+      ) {
+        return;
+      }
+
+      currentDecision = 'granted';
+      updateConsent('granted');
+      loadGtm();
+      dispatchConsentChange('granted');
+    };
+
+    window.addEventListener('storage', (event) => {
+      if (event.key !== consentStorageKey && event.key !== null) return;
+
+      const incomingDecision = validateStoredConsent(event.newValue);
+      if (incomingDecision === 'granted') {
+        if (readDenialTombstone() === false) applySynchronizedGrant();
+        return;
+      }
+
+      applySynchronizedDenial();
+    });
+
+    if (consentChannel) {
+      consentChannel.onmessage = (event) => {
+        const message = event.data;
+        if (
+          message === null ||
+          typeof message !== 'object' ||
+          message.version !== consentSchemaVersion ||
+          (message.analytics !== 'granted' && message.analytics !== 'denied')
+        ) {
+          return;
+        }
+
+        if (message.analytics === 'denied') {
+          applySynchronizedDenial();
+          return;
+        }
+
+        applySynchronizedGrant();
+      };
+
+      window.addEventListener(
+        'unload',
+        () => {
+          consentChannel?.close();
+        },
+        { once: true },
+      );
+    }
+
+    const denyAnalytics = (previousDecision) => {
+      const tombstonePersisted = writeDenialTombstone();
+      updateConsent('denied');
+      removeAnalyticsCookies();
+      const storagePersisted = persistConsent('denied');
+      const denialRestorable = tombstonePersisted || storagePersisted;
+
+      currentDecision = denialRestorable ? 'denied' : null;
+      publishConsent('denied');
+      dispatchConsentChange('denied');
+
+      const shouldReload = previousDecision === 'granted' && denialRestorable;
+      if (shouldReload) reloadOnce();
+
+      return { persisted: denialRestorable, reloading: shouldReload };
+    };
+
+    const grantAnalytics = (previousDecision) => {
+      if (!persistConsent('granted') || !clearDenialTombstone()) {
+        const denialRestorable = ensureDeniedCanBeRestored();
+        updateConsent('denied');
+        removeAnalyticsCookies();
+        currentDecision = denialRestorable ? 'denied' : null;
+        publishConsent('denied');
+        dispatchConsentChange('denied');
+
+        const shouldReload = previousDecision === 'granted' && denialRestorable;
+        if (shouldReload) reloadOnce();
+
+        return { persisted: false, reloading: shouldReload };
+      }
+
+      currentDecision = 'granted';
+      updateConsent('granted');
+      loadGtm();
+      publishConsent('granted');
+      dispatchConsentChange('granted');
+      return { persisted: true, reloading: false };
+    };
+
+    const setAnalyticsConsent = (analytics) => {
+      const previousDecision = currentDecision;
+
+      if (analytics === 'denied') return denyAnalytics(previousDecision);
+      if (analytics === 'granted') return grantAnalytics(previousDecision);
+      return { persisted: false, reloading: false };
+    };
+
+    const tombstoneState = readDenialTombstone();
+    if (tombstoneState === true) {
+      ensureDeniedCanBeRestored();
+      currentDecision = 'denied';
+    } else if (tombstoneState === false) {
+      const storedConsent = readStoredConsent();
+      if (storedConsent.decision === 'denied') {
+        const remainingSeconds = Math.max(
+          1,
+          Math.ceil((storedConsent.expiresAt - Date.now()) / 1000),
+        );
+        writeDenialTombstone(remainingSeconds);
+        currentDecision = 'denied';
+      } else if (storedConsent.decision === 'granted') {
+        currentDecision = 'granted';
+      } else {
+        if (storedConsent.available && storedConsent.hasValue) {
+          clearStoredConsent();
+        }
+        currentDecision = null;
+      }
+    }
+
+    window.mmdevMeasurement = Object.freeze({
+      getAnalyticsConsent: () => currentDecision,
+      setAnalyticsConsent,
+      openPreferences: () => {
+        preferencesOpenPending = true;
+        document.dispatchEvent(new CustomEvent(preferencesOpenEvent));
+      },
+      consumePendingPreferencesOpen: () => {
+        const wasPending = preferencesOpenPending;
+        preferencesOpenPending = false;
+        return wasPending;
+      },
+      hasLoadedGtm: () => gtmLoaded,
+    });
+
+    if (currentDecision === 'granted') {
+      updateConsent('granted');
+      loadGtm();
+    }
+  })();
+</script>

@@ -17,6 +17,9 @@ const year = new Date().getUTCFullYear();
           <a href={item.href}>{item.label}</a>
         ))}
         <a href="/privacidad/">Privacidad</a>
+        <button type="button" data-open-privacy-preferences>
+          Preferencias de privacidad
+        </button>
       </nav>
       <a href={`mailto:${siteConfig.contact.email}`}>
         {siteConfig.contact.email}
@@ -58,12 +61,22 @@ const year = new Date().getUTCFullYear();
     justify-content: flex-end;
     gap: 1rem 1.5rem;
   }
-  .site-footer__links a {
+  .site-footer__links a,
+  .site-footer__links button {
     color: var(--color-muted);
     text-decoration-color: var(--color-border);
     text-underline-offset: 0.2rem;
   }
-  .site-footer__links a:hover {
+  .site-footer__links button {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: var(--color-border);
+  }
+  .site-footer__links a:hover,
+  .site-footer__links button:hover {
     color: var(--color-blue-dark);
   }
   .site-footer__bottom {
