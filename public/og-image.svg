@@ -1,14 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#f6f2eb"/>
-  <rect x="72" y="68" width="1056" height="494" fill="#fffdf8" stroke="#d7cec1" stroke-width="2"/>
-  <rect x="115" y="110" width="70" height="70" rx="4" fill="#173039"/>
-  <path d="M128 157v-24l9 13 9-13v24m7 0v-24l9 13 9-13v24" fill="none" stroke="#ffffff" stroke-width="3.5"/>
-  <path d="M146 157v-24" stroke="#dbb588" stroke-width="3.5"/>
-  <text x="207" y="157" fill="#173039" font-family="Arial,sans-serif" font-size="31" font-weight="700" letter-spacing="3">MM DEV</text>
-  <path d="M115 207H1085" stroke="#d7cec1" stroke-width="2"/>
-  <text x="115" y="291" fill="#704321" font-family="Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="2">SOFTWARE · INTEGRACIONES · INFRAESTRUCTURA</text>
-  <text x="115" y="382" fill="#172d34" font-family="Georgia,serif" font-size="57">La tecnología de tu empresa,</text>
-  <text x="115" y="454" fill="#172d34" font-family="Georgia,serif" font-size="57">bien resuelta.</text>
-  <path d="M115 513H1085" stroke="#d7cec1" stroke-width="2"/>
-  <text x="115" y="541" fill="#4e5d5d" font-family="Arial,sans-serif" font-size="21">Trabajo cercano. Costos claros. Control de tus activos digitales.</text>
+  <rect width="1200" height="630" fill="#101b27"/>
+  <path d="M90 84H1110M90 554H1110" stroke="#52616d" stroke-width="2"/>
+  <rect x="90" y="112" width="64" height="64" fill="#172634" stroke="#e9be72"/>
+  <text x="103" y="153" fill="#e9be72" font-family="Arial,sans-serif" font-size="29" font-weight="700">M.</text>
+  <text x="90" y="285" fill="#e9be72" font-family="Arial,sans-serif" font-size="21" letter-spacing="3">DESARROLLO · INTEGRACIONES · AUTOMATIZACIÓN</text>
+  <text x="90" y="383" fill="#f7f9fa" font-family="Arial,sans-serif" font-size="72" font-weight="700">Manuel Matus</text>
+  <text x="90" y="450" fill="#f1d398" font-family="Arial,sans-serif" font-size="34">Desarrollador Full-Stack</text>
+  <text x="90" y="515" fill="#bfccd5" font-family="Arial,sans-serif" font-size="26">Asesoría informática personalizada</text>
+  <text x="1000" y="596" fill="#bfccd5" font-family="Arial,sans-serif" font-size="22">mmdev.cl</text>
 </svg>

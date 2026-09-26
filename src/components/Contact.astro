@@ -4,144 +4,123 @@ import { siteConfig } from '../config/site.config';
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
 
-<section
-  class="contact section section--surface"
-  id="contacto"
-  aria-labelledby="contact-title"
->
-  <div class="contact__layout container">
-    <div class="contact__intro">
-      <p class="eyebrow">Contacto</p>
-      <h2 id="contact-title">{siteConfig.contact.title}</h2>
-      <p class="lead">{siteConfig.contact.description}</p>
-      <a class="contact__email" href={`mailto:${siteConfig.contact.email}`}>
-        {siteConfig.contact.email}
-      </a>
+<section class="contact" id="contacto" aria-labelledby="contact-title">
+  <p class="contact__eyebrow">Contacto directo / 01</p>
+  <h2 id="contact-title">{siteConfig.contact.title}</h2>
+  <p class="contact__lead">{siteConfig.contact.description}</p>
+  <p class="contact__alternative">
+    También puedes escribirme a{' '}
+    <a href={`mailto:${siteConfig.contact.email}`}>
+      {siteConfig.contact.email}
+    </a>
+    .
+  </p>
+  <form
+    class="contact-form"
+    action="/api/contact"
+    method="post"
+    data-contact-form
+  >
+    <div class="contact-form__field">
+      <label for="name">Tu nombre</label>
+      <input
+        id="name"
+        name="name"
+        type="text"
+        autocomplete="name"
+        maxlength="100"
+        required
+      />
+    </div>
+    <div class="contact-form__field">
+      <label for="email">Tu correo</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        autocomplete="email"
+        maxlength="160"
+        required
+      />
+    </div>
+    <div class="contact-form__field">
+      <label for="phone">
+        Teléfono <span>(si prefieres que te llamemos)</span>
+      </label>
+      <input
+        id="phone"
+        name="phone"
+        type="tel"
+        autocomplete="tel"
+        maxlength="40"
+      />
+    </div>
+    <div class="contact-form__field contact-form__field--wide">
+      <label for="message">¿En qué puedo ayudarte?</label>
+      <textarea
+        id="message"
+        name="message"
+        rows="5"
+        minlength="10"
+        maxlength="3000"
+        placeholder="Cuéntame brevemente qué tienes en mente…"
+        required
+      ></textarea>
     </div>
 
-    <form
-      class="contact-form"
-      action="/api/contact"
-      method="post"
-      data-contact-form
-    >
-      <div class="contact-form__field">
-        <label for="name">Tu nombre</label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          autocomplete="name"
-          maxlength="100"
-          required
-        />
-      </div>
-      <div class="contact-form__field">
-        <label for="email">Tu correo</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          autocomplete="email"
-          maxlength="160"
-          required
-        />
-      </div>
-      <div class="contact-form__field">
-        <label for="phone">
-          Teléfono <span>(si prefieres que te llamemos)</span>
-        </label>
-        <input
-          id="phone"
-          name="phone"
-          type="tel"
-          autocomplete="tel"
-          maxlength="40"
-        />
-      </div>
-      <div class="contact-form__field contact-form__field--wide">
-        <label for="service">
-          ¿Sobre qué quieres conversar? <span>(opcional)</span>
-        </label>
-        <select id="service" name="service">
-          <option value="">Puedes elegirlo después</option>
-          {siteConfig.contact.serviceOptions.map((option) => (
-            <option value={option}>{option}</option>
-          ))}
-        </select>
-      </div>
-      <div class="contact-form__field contact-form__field--wide">
-        <label for="message">Cuéntanos qué necesitas</label>
-        <textarea
-          id="message"
-          name="message"
-          rows="5"
-          minlength="10"
-          maxlength="3000"
-          placeholder="Por ejemplo: hoy llevamos el inventario en Excel y queremos conectarlo con nuestra tienda."
-          required
-        ></textarea>
-        <small>
-          Escríbenos como se lo contarías a alguien de tu equipo. No hace falta
-          tener una solución definida.
-        </small>
-      </div>
+    <div class="contact-form__trap" aria-hidden="true">
+      <label for="website">Sitio web</label>
+      <input
+        id="website"
+        name="website"
+        type="text"
+        autocomplete="off"
+        tabindex="-1"
+      />
+    </div>
 
-      <div class="contact-form__trap" aria-hidden="true">
-        <label for="website">Sitio web</label>
-        <input
-          id="website"
-          name="website"
-          type="text"
-          autocomplete="off"
-          tabindex="-1"
-        />
-      </div>
+    <label class="contact-form__consent">
+      <input name="consent" type="checkbox" required />
+      <span>
+        Acepto que mis datos se usen solo para responderme. Puedes conocer los
+        detalles en el <a href="/privacidad/">aviso de privacidad</a>.
+      </span>
+    </label>
 
-      <label class="contact-form__consent">
-        <input name="consent" type="checkbox" required />
-        <span>
-          Acepto que MM Dev use estos datos solo para responder mi mensaje.
-          Conoce cómo los cuidamos en el{' '}
-          <a href="/privacidad/">aviso de privacidad</a>.
-        </span>
-      </label>
+    {turnstileSiteKey ? (
+      <div
+        class="cf-turnstile"
+        data-sitekey={turnstileSiteKey}
+        data-theme="dark"
+        data-action="contact"
+      ></div>
+    ) : (
+      <p class="contact-form__setup" role="note">
+        El envío web se habilitará al configurar la protección antispam.
+        Mientras tanto puede escribir a{' '}
+        <a href={`mailto:${siteConfig.contact.email}`}>
+          {siteConfig.contact.email}
+        </a>
+        .
+      </p>
+    )}
 
-      {turnstileSiteKey ? (
-        <div
-          class="cf-turnstile"
-          data-sitekey={turnstileSiteKey}
-          data-theme="light"
-          data-action="contact"
-        ></div>
-      ) : (
-        <p class="contact-form__setup" role="note">
-          El envío web se habilitará al configurar la protección antispam.
-          Mientras tanto puede escribir a{' '}
-          <a href={`mailto:${siteConfig.contact.email}`}>
-            {siteConfig.contact.email}
-          </a>
-          .
-        </p>
-      )}
-
-      <div class="contact-form__footer">
-        <button
-          class="button button--primary"
-          type="submit"
-          disabled={!turnstileSiteKey}
-        >
-          Enviar mensaje <span aria-hidden="true">→</span>
-        </button>
-        <p
-          class="contact-form__status"
-          role="status"
-          aria-live="polite"
-          data-form-status
-        ></p>
-      </div>
-    </form>
-  </div>
+    <div class="contact-form__footer">
+      <button
+        class="button button--primary"
+        type="submit"
+        disabled={!turnstileSiteKey}
+      >
+        Enviar mensaje <span aria-hidden="true">↗</span>
+      </button>
+      <p
+        class="contact-form__status"
+        role="status"
+        aria-live="polite"
+        data-form-status
+      ></p>
+    </div>
+  </form>
 </section>
 
 {turnstileSiteKey && (
@@ -202,36 +181,51 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 </script>
 
 <style>
-  .contact__layout {
-    display: grid;
-    grid-template-columns: minmax(0, 0.85fr) minmax(22rem, 1.15fr);
-    gap: clamp(3rem, 8vw, 8rem);
-    align-items: start;
+  .contact {
+    width: 100%;
+    max-width: 38rem;
+    margin-block: auto;
+    padding-block: clamp(4rem, 10vh, 8rem);
   }
-  .contact__intro {
-    position: sticky;
-    inset-block-start: 7rem;
-  }
-  .contact__email {
-    display: inline-block;
-    margin-block-start: 1.25rem;
-    color: var(--color-blue-dark);
+  .contact__eyebrow {
+    margin-bottom: 1.1rem;
+    color: var(--color-accent);
+    font-size: 0.75rem;
     font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .contact h2 {
+    max-width: 34rem;
+    margin-bottom: 1rem;
+    font-size: clamp(2.7rem, 4vw, 4.4rem);
+    line-height: 1.1;
+    letter-spacing: -0.055em;
+  }
+  .contact__lead {
+    max-width: 31rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-muted);
+    font-size: 1.08rem;
+  }
+  .contact__alternative {
+    margin-bottom: 2.5rem;
+    color: var(--color-muted);
+    font-size: 0.95rem;
+  }
+  .contact__alternative a {
+    color: var(--color-highlight);
     text-underline-offset: 0.25rem;
   }
   .contact-form {
     position: relative;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
-    padding: clamp(1.25rem, 4vw, 2.25rem);
-    border: 1px solid var(--color-border);
-    box-shadow: 0 1rem 2.5rem rgb(23 45 52 / 5%);
-    background: var(--color-surface);
+    gap: 1.3rem;
   }
   .contact-form__field {
     display: grid;
-    gap: 0.4rem;
+    gap: 0.45rem;
   }
   .contact-form__field--wide,
   .contact-form__consent,
@@ -241,49 +235,57 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     grid-column: 1 / -1;
   }
   .contact-form label {
-    color: var(--color-navy);
-    font-size: 0.9rem;
-    font-weight: 700;
+    color: var(--color-main);
+    font-size: 0.87rem;
+    font-weight: 600;
   }
-  .contact-form label span,
-  .contact-form small {
+  .contact-form label span {
     color: var(--color-muted);
     font-weight: 400;
   }
   .contact-form input,
-  .contact-form select,
   .contact-form textarea {
     width: 100%;
-    min-height: 3rem;
-    padding: 0.7rem 0.8rem;
+    min-height: 3.25rem;
+    padding: 0.8rem 0.9rem;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-control);
-    background: var(--color-background);
-    color: var(--color-ink);
+    border-radius: 0.3rem;
+    background: var(--color-panel);
+    color: var(--color-main);
+  }
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder {
+    color: var(--color-muted);
   }
   .contact-form textarea {
+    min-height: 8rem;
     resize: vertical;
   }
   .contact-form input:focus,
-  .contact-form select:focus,
   .contact-form textarea:focus {
-    border-color: var(--color-blue);
-    outline: 2px solid rgb(129 85 47 / 18%);
-    outline-offset: 0;
+    border-color: var(--color-accent);
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
   }
   .contact-form__consent {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 0.65rem;
+    gap: 0.7rem;
     align-items: start;
   }
   .contact-form__consent input {
     width: 1.15rem;
     min-height: 1.15rem;
     margin-top: 0.2rem;
+    accent-color: var(--color-accent);
   }
   .contact-form__consent span {
     color: var(--color-muted);
+    font-size: 0.85rem;
+    font-weight: 400;
+  }
+  .contact-form__consent a {
+    color: var(--color-highlight);
   }
   .contact-form__trap {
     position: absolute;
@@ -294,20 +296,24 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
   }
   .contact-form__setup {
     margin: 0;
-    padding: 0.85rem;
-    border-left: 3px solid var(--color-blue);
-    background: var(--color-blue-soft);
+    padding: 0.9rem;
+    border-left: 2px solid var(--color-accent);
+    background: var(--color-panel);
     color: var(--color-muted);
+    font-size: 0.85rem;
+  }
+  .contact-form__setup a {
+    color: var(--color-highlight);
   }
   .contact-form__footer {
-    display: grid;
-    grid-template-columns: auto 1fr;
+    display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
   }
   .contact-form__status {
     margin: 0;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
   .contact-form__status[data-state='success'] {
     color: var(--color-success);
@@ -315,19 +321,11 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
   .contact-form__status[data-state='error'] {
     color: var(--color-error);
   }
-  @media (max-width: 52rem) {
-    .contact__layout {
-      grid-template-columns: 1fr;
-    }
-    .contact__intro {
-      position: static;
-    }
-  }
   @media (max-width: 36rem) {
-    .contact-form {
-      grid-template-columns: 1fr;
+    .contact {
+      padding-block: 3rem;
     }
-    .contact-form__footer {
+    .contact-form {
       grid-template-columns: 1fr;
     }
   }

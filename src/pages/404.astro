@@ -1,16 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Brand from '../components/Brand.astro';
 ---
 
 <BaseLayout
-  title="Página no encontrada | MM Dev"
+  title="Página no encontrada | Manuel Matus"
   description="La página solicitada no existe."
   noindex
 >
   <main class="not-found">
-    <a href="/" aria-label="Ir al inicio de MM Dev">
-      <Brand />
+    <a href="/" aria-label="Ir al inicio de Manuel Matus">
+      ← Manuel Matus
     </a>
     <p class="eyebrow">Error 404</p>
     <h1>Página no encontrada.</h1>
@@ -34,6 +33,7 @@ import Brand from '../components/Brand.astro';
   }
   .not-found > a:first-child {
     margin-block-end: 4rem;
+    color: var(--color-highlight);
     text-decoration: none;
   }
 </style>

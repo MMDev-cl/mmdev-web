@@ -23,13 +23,12 @@ const socialImageUrl = new URL(
 ).toString();
 const structuredData = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: siteConfig.brand.legalName,
-  alternateName: siteConfig.brand.name,
+  '@type': 'Person',
+  name: siteConfig.person.name,
+  jobTitle: siteConfig.person.role,
+  sameAs: [siteConfig.person.github],
   url: siteConfig.siteUrl,
-  logo: new URL('/brand/mark.svg', siteConfig.siteUrl).toString(),
   email: siteConfig.contact.email,
-  areaServed: siteConfig.brand.country,
 };
 ---
 
@@ -45,14 +44,14 @@ const structuredData = {
       name="robots"
       content={noindex ? 'noindex, follow' : 'index, follow'}
     />
-    <meta name="theme-color" content="#f6f2eb" />
+    <meta name="theme-color" content="#101b27" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_CL" />
-    <meta property="og:site_name" content={siteConfig.brand.name} />
+    <meta property="og:site_name" content={siteConfig.person.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
@@ -61,7 +60,7 @@ const structuredData = {
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="MM Dev — software, integraciones e infraestructura para empresas"
+      content="Manuel Matus — Desarrollador Full-Stack y asesoría informática"
     />
 
     <meta name="twitter:card" content="summary_large_image" />

@@ -1,4 +1,4 @@
-# Configuración del sitio MM Dev
+# Configuración del sitio personal de Manuel Matus
 
 La identidad, el contenido y los servicios externos se mantienen separados de los componentes.
 
@@ -6,13 +6,9 @@ La identidad, el contenido y los servicios externos se mantienen separados de lo
 
 Editar `src/config/site.config.ts` para modificar:
 
-- nombre y razón social;
-- navegación;
-- presentación principal;
-- capacidades;
-- método de trabajo;
-- principios empresariales;
-- correo y opciones del formulario;
+- identidad personal, retrato y enlaces sociales;
+- razón social a cargo de los servicios y datos;
+- correo y presentación del formulario;
 - título, descripción e imagen social.
 
 ## Identidad visual
@@ -21,12 +17,11 @@ Editar `src/styles/tokens.css` para modificar colores, tipografías, radios y an
 
 Activos:
 
-- `public/brand/mark.svg`: símbolo principal;
 - `public/favicon.svg`: icono del navegador;
 - `public/og-image.png`: imagen para redes y mensajería;
 - `public/og-image.svg`: fuente editable de la imagen social.
 
-La fuente de cuerpo se distribuye desde Fontsource y se empaqueta durante el build. Los títulos usan Georgia con una alternativa serif del sistema. No se consultan servidores de Google Fonts en producción.
+Las fuentes de cuerpo y títulos se distribuyen desde Fontsource y se empaquetan durante el build. No se consultan servidores de Google Fonts en producción.
 
 ## Medición consentida
 
@@ -98,7 +93,7 @@ Variables de Cloudflare Pages:
 | `CONTACT_TO_EMAIL`          | Variable          | Destino; normalmente `contacto@mmdev.cl`        |
 
 El formulario permanece deshabilitado si no existe la clave pública Turnstile. El endpoint rechaza envíos si faltan los secretos.
-Nombre, correo, mensaje y autorización para responder son obligatorios; teléfono y tipo de consulta son opcionales. Ejecutar `npm run verify:contact` para verificar el contrato entre el formulario y el endpoint.
+Nombre, correo, mensaje y autorización para responder son obligatorios; teléfono es opcional. Ejecutar `npm run verify:contact` para verificar el contrato entre el formulario y el endpoint. Los enlaces sociales sin URL se ocultan hasta que se configuren; `portrait` muestra las iniciales hasta añadir una foto real.
 
 ## Validación
 

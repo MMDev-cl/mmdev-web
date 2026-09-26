@@ -1,0 +1,269 @@
+---
+import Contact from './Contact.astro';
+import { siteConfig } from '../config/site.config';
+
+const { person, contact, brand } = siteConfig;
+const year = new Date().getUTCFullYear();
+---
+
+<main class="personal-layout" id="contenido-principal">
+  <aside class="personal-intro" aria-labelledby="personal-name">
+    <div class="personal-intro__top">
+      <a
+        class="personal-intro__wordmark"
+        href="/"
+        aria-label="Manuel Matus, inicio"
+      >
+        <span class="personal-intro__symbol" aria-hidden="true">
+          M.
+        </span>
+        <span>Manuel Matus</span>
+      </a>
+      <div class="personal-intro__identity">
+        {person.portrait ? (
+          <img
+            class="personal-intro__portrait"
+            src={person.portrait}
+            alt="Retrato de Manuel Matus"
+            width="100"
+            height="100"
+            fetchpriority="high"
+          />
+        ) : (
+          <span
+            class="personal-intro__portrait personal-intro__portrait--initials"
+            aria-hidden="true"
+          >
+            MM
+          </span>
+        )}
+        <p class="personal-intro__eyebrow">
+          Desarrollo · Integraciones · Automatización
+        </p>
+        <h1 id="personal-name">{person.name}</h1>
+        <p class="personal-intro__role">{person.role}</p>
+        <p class="personal-intro__specialty">{person.specialty}</p>
+        <p class="personal-intro__description">{person.introduction}</p>
+      </div>
+    </div>
+    <nav class="personal-intro__links" aria-label="Enlaces de Manuel Matus">
+      <a href={person.github} target="_blank" rel="noopener noreferrer">
+        GitHub <span aria-hidden="true">↗</span>
+      </a>
+      {person.linkedin && (
+        <a href={person.linkedin} target="_blank" rel="noopener noreferrer">
+          LinkedIn <span aria-hidden="true">↗</span>
+        </a>
+      )}
+      {person.instagram && (
+        <a href={person.instagram} target="_blank" rel="noopener noreferrer">
+          Instagram <span aria-hidden="true">↗</span>
+        </a>
+      )}
+      <a href={`mailto:${contact.email}`}>
+        Correo <span aria-hidden="true">↗</span>
+      </a>
+    </nav>
+  </aside>
+
+  <div class="personal-content">
+    <div class="personal-content__top" aria-hidden="true">
+      <span>Disponible para conversar</span>
+      <span>Desde Chile · En remoto</span>
+    </div>
+    <Contact />
+    <footer class="personal-content__footer">
+      <span>© {year} Manuel Matus</span>
+      <div>
+        <a href="/privacidad/">Privacidad</a>
+        <button type="button" data-open-privacy-preferences>
+          Configurar cookies
+        </button>
+      </div>
+      <span class="personal-content__legal">
+        Servicios contratados y facturados por {brand.legalName}.
+      </span>
+    </footer>
+  </div>
+</main>
+
+<style>
+  .personal-layout {
+    display: grid;
+    width: min(100% - 4rem, 82rem);
+    min-height: 100svh;
+    grid-template-columns: minmax(19rem, 0.95fr) minmax(0, 1.05fr);
+    gap: clamp(3rem, 7vw, 8rem);
+    margin-inline: auto;
+  }
+  .personal-intro {
+    position: sticky;
+    top: 0;
+    display: flex;
+    height: 100svh;
+    min-height: 42rem;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-block: 3rem 2.5rem;
+  }
+  .personal-intro__wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: fit-content;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .personal-intro__symbol {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent);
+    font-size: 1.1rem;
+  }
+  .personal-intro__identity {
+    padding-block: 3rem;
+  }
+  .personal-intro__portrait {
+    display: grid;
+    width: 6rem;
+    height: 6rem;
+    margin-bottom: 2.5rem;
+    border: 2px solid var(--color-accent);
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .personal-intro__portrait--initials {
+    place-items: center;
+    background: var(--color-panel);
+    color: var(--color-accent);
+    font-size: 1.45rem;
+    font-weight: 700;
+  }
+  .personal-intro__eyebrow {
+    color: var(--color-accent);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+  .personal-intro h1 {
+    margin: 0.8rem 0 0;
+    font-size: clamp(3rem, 5vw, 5rem);
+    line-height: 1.02;
+    letter-spacing: -0.055em;
+  }
+  .personal-intro__role {
+    margin: 0.9rem 0 0;
+    color: var(--color-highlight);
+    font-size: clamp(1.3rem, 2vw, 1.7rem);
+    font-weight: 600;
+  }
+  .personal-intro__specialty {
+    max-width: 26rem;
+    margin: 0.8rem 0 0;
+    color: var(--color-main);
+    font-size: 1.05rem;
+  }
+  .personal-intro__description {
+    max-width: 28rem;
+    margin: 1.75rem 0 0;
+    color: var(--color-muted);
+  }
+  .personal-intro__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.15rem 1.6rem;
+  }
+  .personal-intro__links a {
+    color: var(--color-main);
+    font-size: 0.9rem;
+    text-decoration-color: var(--color-accent);
+    text-underline-offset: 0.35rem;
+  }
+  .personal-intro__links a:hover,
+  .personal-intro__links a:focus-visible {
+    color: var(--color-accent);
+  }
+  .personal-content {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    padding-block: 3rem 2.5rem;
+  }
+  .personal-content__top {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--color-muted);
+    font-size: 0.8rem;
+  }
+  .personal-content__top span:first-child::before {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-right: 0.5rem;
+    border-radius: 50%;
+    background: var(--color-accent);
+    content: '';
+  }
+  .personal-content__footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.6rem 1rem;
+    margin-top: auto;
+    padding-top: 2.5rem;
+    color: var(--color-muted);
+    font-size: 0.8rem;
+  }
+  .personal-content__footer div {
+    display: flex;
+    gap: 1rem;
+  }
+  .personal-content__footer a,
+  .personal-content__footer button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-muted);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 0.25rem;
+  }
+  .personal-content__footer a:hover,
+  .personal-content__footer button:hover {
+    color: var(--color-accent);
+  }
+  .personal-content__legal {
+    width: 100%;
+  }
+  @media (max-width: 56rem) {
+    .personal-layout {
+      width: min(100% - 2.5rem, 42rem);
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .personal-intro {
+      position: static;
+      height: auto;
+      min-height: auto;
+      gap: 0;
+      padding-block: 2rem 0;
+    }
+    .personal-intro__identity {
+      padding-block: 3rem 2rem;
+    }
+    .personal-intro__portrait {
+      margin-bottom: 1.5rem;
+    }
+    .personal-content {
+      padding-block: 2.5rem 2rem;
+    }
+    .personal-content__top {
+      display: none;
+    }
+  }
+</style>
