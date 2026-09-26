@@ -3,47 +3,56 @@ import Contact from './Contact.astro';
 import SocialIcon from './SocialIcon.astro';
 import { siteConfig } from '../config/site.config';
 
-const { person, contact, brand } = siteConfig;
-const year = new Date().getUTCFullYear();
+const { person, contact } = siteConfig;
 ---
+
+<header class="personal-header">
+  <a class="personal-header__wordmark" href="/" aria-label="M.dev, inicio">
+    <span class="personal-header__symbol" aria-hidden="true">
+      M.
+    </span>
+    <span>dev</span>
+  </a>
+</header>
 
 <main class="personal-layout" id="contenido-principal">
   <aside class="personal-intro" aria-labelledby="personal-name">
-    <div class="personal-intro__top">
-      <a class="personal-intro__wordmark" href="/" aria-label="M.dev, inicio">
-        <span class="personal-intro__symbol" aria-hidden="true">
-          M.
+    <div class="personal-intro__identity">
+      {person.portrait ? (
+        <img
+          class="personal-intro__portrait"
+          src={person.portrait}
+          alt="Retrato de Manuel Matus"
+          width="100"
+          height="100"
+          fetchpriority="high"
+        />
+      ) : (
+        <span
+          class="personal-intro__portrait personal-intro__portrait--initials"
+          aria-hidden="true"
+        >
+          MM
         </span>
-        <span>dev</span>
-      </a>
-      <div class="personal-intro__identity">
-        {person.portrait ? (
-          <img
-            class="personal-intro__portrait"
-            src={person.portrait}
-            alt="Retrato de Manuel Matus"
-            width="100"
-            height="100"
-            fetchpriority="high"
-          />
-        ) : (
-          <span
-            class="personal-intro__portrait personal-intro__portrait--initials"
-            aria-hidden="true"
-          >
-            MM
-          </span>
-        )}
-        <p class="personal-intro__eyebrow">
-          Desarrollo · Integraciones · Automatización
-        </p>
-        <h1 id="personal-name">{person.name}</h1>
-        <p class="personal-intro__role">{person.role}</p>
-        <p class="personal-intro__specialty">{person.specialty}</p>
-        <p class="personal-intro__description">{person.introduction}</p>
-      </div>
+      )}
+      <p class="personal-intro__eyebrow">
+        Desarrollo · Integraciones · Automatización
+      </p>
+      <h1 id="personal-name">{person.name}</h1>
+      <p class="personal-intro__role">{person.role}</p>
+      <p class="personal-intro__specialty">{person.specialty}</p>
+      <p class="personal-intro__description">{person.introduction}</p>
     </div>
-    <nav class="personal-intro__links" aria-label="Enlaces de Manuel Matus">
+  </aside>
+
+  <div class="personal-content">
+    <Contact />
+  </div>
+</main>
+
+<footer class="personal-footer">
+  <div class="personal-footer__inner">
+    <nav class="personal-footer__links" aria-label="Perfiles de Manuel Matus">
       <a href={person.github} target="_blank" rel="noopener noreferrer">
         <SocialIcon name="github" /> GitHub
       </a>
@@ -61,45 +70,33 @@ const year = new Date().getUTCFullYear();
         <SocialIcon name="email" /> Correo
       </a>
     </nav>
-  </aside>
-
-  <div class="personal-content">
-    <Contact />
-    <footer class="personal-content__footer">
-      <span>© {year} Manuel Matus</span>
-      <div>
-        <a href="/privacidad/">Privacidad</a>
-        <button type="button" data-open-privacy-preferences>
-          Configurar cookies
-        </button>
-      </div>
-      <span class="personal-content__legal">
-        Servicios contratados y facturados por {brand.legalName}.
-      </span>
-    </footer>
+    <nav class="personal-footer__privacy" aria-label="Privacidad y cookies">
+      <a href="/privacidad/">Privacidad</a>
+      <button type="button" data-open-privacy-preferences>
+        Cookies
+      </button>
+    </nav>
   </div>
-</main>
+</footer>
 
 <style>
+  .personal-header {
+    width: min(100% - 4rem, 82rem);
+    margin-inline: auto;
+    padding-top: 2rem;
+  }
   .personal-layout {
     display: grid;
     width: min(100% - 4rem, 82rem);
-    min-height: 100svh;
     grid-template-columns: minmax(19rem, 0.95fr) minmax(0, 1.05fr);
     gap: clamp(3rem, 7vw, 8rem);
     margin-inline: auto;
+    padding-block: clamp(3rem, 7vh, 5rem) 9rem;
   }
   .personal-intro {
-    position: sticky;
-    top: 0;
-    display: flex;
-    height: 100svh;
-    min-height: 42rem;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-block: 3rem 2.5rem;
+    align-self: center;
   }
-  .personal-intro__wordmark {
+  .personal-header__wordmark {
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
@@ -108,13 +105,7 @@ const year = new Date().getUTCFullYear();
     font-weight: 700;
     text-decoration: none;
   }
-  .personal-intro__top {
-    display: flex;
-    min-height: 0;
-    flex: 1;
-    flex-direction: column;
-  }
-  .personal-intro__symbol {
+  .personal-header__symbol {
     display: grid;
     width: 2.7rem;
     height: 2.7rem;
@@ -127,8 +118,6 @@ const year = new Date().getUTCFullYear();
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-block: auto;
-    padding-block: 3rem;
     text-align: center;
   }
   .personal-intro__portrait {
@@ -178,13 +167,30 @@ const year = new Date().getUTCFullYear();
     margin: 1.75rem 0 0;
     color: var(--color-muted);
   }
-  .personal-intro__links {
+  .personal-footer {
+    position: fixed;
+    z-index: 10;
+    inset: auto 0 0;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-background);
+  }
+  .personal-footer__inner {
+    display: flex;
+    width: min(100% - 4rem, 82rem);
+    min-height: 4.5rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 2rem;
+    margin-inline: auto;
+  }
+  .personal-footer__links,
+  .personal-footer__privacy {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.15rem 1.6rem;
+    align-items: center;
+    gap: 0.5rem 1.5rem;
   }
-  .personal-intro__links a {
+  .personal-footer__links a {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -193,32 +199,15 @@ const year = new Date().getUTCFullYear();
     text-decoration-color: var(--color-accent);
     text-underline-offset: 0.35rem;
   }
-  .personal-intro__links a:hover,
-  .personal-intro__links a:focus-visible {
+  .personal-footer__links a:hover,
+  .personal-footer__links a:focus-visible {
     color: var(--color-accent);
   }
   .personal-content {
-    display: flex;
     min-width: 0;
-    flex-direction: column;
-    padding-block: 3rem 2.5rem;
   }
-  .personal-content__footer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.6rem 1rem;
-    margin-top: auto;
-    padding-top: 2.5rem;
-    color: var(--color-muted);
-    font-size: 0.8rem;
-  }
-  .personal-content__footer div {
-    display: flex;
-    gap: 1rem;
-  }
-  .personal-content__footer a,
-  .personal-content__footer button {
+  .personal-footer__privacy a,
+  .personal-footer__privacy button {
     padding: 0;
     border: 0;
     background: none;
@@ -227,34 +216,42 @@ const year = new Date().getUTCFullYear();
     text-decoration: underline;
     text-underline-offset: 0.25rem;
   }
-  .personal-content__footer a:hover,
-  .personal-content__footer button:hover {
+  .personal-footer__privacy a:hover,
+  .personal-footer__privacy button:hover,
+  .personal-footer__privacy a:focus-visible,
+  .personal-footer__privacy button:focus-visible {
     color: var(--color-accent);
   }
-  .personal-content__legal {
-    width: 100%;
-  }
   @media (max-width: 56rem) {
+    .personal-header,
     .personal-layout {
       width: min(100% - 2.5rem, 42rem);
+    }
+    .personal-layout {
       grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-    .personal-intro {
-      position: static;
-      height: auto;
-      min-height: auto;
-      gap: 0;
-      padding-block: 2rem 0;
-    }
-    .personal-intro__identity {
-      padding-block: 3rem 2rem;
+      gap: 3rem;
+      padding-block: 3rem 10rem;
     }
     .personal-intro__portrait {
       margin-bottom: 1.5rem;
     }
-    .personal-content {
-      padding-block: 2.5rem 2rem;
+    .personal-footer__inner {
+      width: min(100% - 2.5rem, 42rem);
+    }
+  }
+  @media (max-width: 36rem) {
+    .personal-footer__inner {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem 1.5rem;
+      padding-block: 0.8rem;
+    }
+    .personal-footer__links,
+    .personal-footer__privacy {
+      justify-content: center;
+    }
+    .personal-layout {
+      padding-bottom: 12rem;
     }
   }
 </style>

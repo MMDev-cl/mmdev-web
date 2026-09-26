@@ -17,7 +17,7 @@ Editar `src/styles/tokens.css` para modificar colores, tipografías, radios y an
 
 Activos:
 
-- `public/favicon.svg`: icono del navegador;
+- `public/favicon-mdev.svg`: icono del navegador;
 - `public/og-image.png`: imagen para redes y mensajería;
 - `public/og-image.svg`: fuente editable de la imagen social.
 
