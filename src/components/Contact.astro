@@ -26,7 +26,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       data-contact-form
     >
       <div class="contact-form__field">
-        <label for="name">Nombre y apellido</label>
+        <label for="name">Tu nombre</label>
         <input
           id="name"
           name="name"
@@ -37,7 +37,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         />
       </div>
       <div class="contact-form__field">
-        <label for="email">Correo</label>
+        <label for="email">Tu correo</label>
         <input
           id="email"
           name="email"
@@ -48,19 +48,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         />
       </div>
       <div class="contact-form__field">
-        <label for="company">Empresa</label>
-        <input
-          id="company"
-          name="company"
-          type="text"
-          autocomplete="organization"
-          maxlength="120"
-          required
-        />
-      </div>
-      <div class="contact-form__field">
         <label for="phone">
-          Teléfono <span>(opcional)</span>
+          Teléfono <span>(si prefieres que te llamemos)</span>
         </label>
         <input
           id="phone"
@@ -71,27 +60,30 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         />
       </div>
       <div class="contact-form__field contact-form__field--wide">
-        <label for="service">Área de interés</label>
-        <select id="service" name="service" required>
-          <option value="">Seleccione una opción</option>
+        <label for="service">
+          ¿Sobre qué quieres conversar? <span>(opcional)</span>
+        </label>
+        <select id="service" name="service">
+          <option value="">Puedes elegirlo después</option>
           {siteConfig.contact.serviceOptions.map((option) => (
             <option value={option}>{option}</option>
           ))}
         </select>
       </div>
       <div class="contact-form__field contact-form__field--wide">
-        <label for="message">¿Qué necesita implementar o mejorar?</label>
+        <label for="message">Cuéntanos qué necesitas</label>
         <textarea
           id="message"
           name="message"
-          rows="6"
-          minlength="20"
+          rows="5"
+          minlength="10"
           maxlength="3000"
+          placeholder="Por ejemplo: hoy llevamos el inventario en Excel y queremos conectarlo con nuestra tienda."
           required
         ></textarea>
         <small>
-          Incluya el contexto principal, el resultado esperado y cualquier plazo
-          relevante.
+          Escríbenos como se lo contarías a alguien de tu equipo. No hace falta
+          tener una solución definida.
         </small>
       </div>
 
@@ -109,8 +101,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       <label class="contact-form__consent">
         <input name="consent" type="checkbox" required />
         <span>
-          Acepto que MM Dev utilice estos datos únicamente para responder esta
-          consulta, según el <a href="/privacidad/">aviso de privacidad</a>.
+          Acepto que MM Dev use estos datos solo para responder mi mensaje.
+          Conoce cómo los cuidamos en el{' '}
+          <a href="/privacidad/">aviso de privacidad</a>.
         </span>
       </label>
 
@@ -138,7 +131,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
           type="submit"
           disabled={!turnstileSiteKey}
         >
-          Enviar consulta <span aria-hidden="true">→</span>
+          Enviar mensaje <span aria-hidden="true">→</span>
         </button>
         <p
           class="contact-form__status"
@@ -211,7 +204,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 <style>
   .contact__layout {
     display: grid;
-    grid-template-columns: minmax(0, 0.8fr) minmax(24rem, 1.2fr);
+    grid-template-columns: minmax(0, 0.85fr) minmax(22rem, 1.15fr);
     gap: clamp(3rem, 8vw, 8rem);
     align-items: start;
   }
@@ -230,9 +223,10 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     position: relative;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.1rem;
+    gap: 1rem;
     padding: clamp(1.25rem, 4vw, 2.25rem);
     border: 1px solid var(--color-border);
+    box-shadow: 0 1rem 2.5rem rgb(23 45 52 / 5%);
     background: var(--color-surface);
   }
   .contact-form__field {
@@ -274,7 +268,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
   .contact-form select:focus,
   .contact-form textarea:focus {
     border-color: var(--color-blue);
-    outline: 2px solid rgb(31 95 174 / 16%);
+    outline: 2px solid rgb(129 85 47 / 18%);
     outline-offset: 0;
   }
   .contact-form__consent {

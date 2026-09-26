@@ -9,11 +9,14 @@ import { siteConfig } from '../config/site.config';
 >
   <div class="container">
     <div class="section-heading">
-      <p class="eyebrow">Capacidades</p>
-      <h2 id="capabilities-title">Una base tecnológica completa.</h2>
+      <p class="eyebrow">Qué hacemos</p>
+      <h2 id="capabilities-title">
+        Desde tu primer dominio hasta sistemas que trabajan juntos.
+      </h2>
       <p class="lead">
-        Conectamos desarrollo, plataformas e infraestructura para que la
-        solución funcione como un sistema, no como piezas aisladas.
+        Puedes llegar con una planilla, un sistema antiguo o una operación ya
+        montada. Revisamos el punto de partida y resolvemos lo que más impacto
+        tiene para tu equipo.
       </p>
     </div>
     <div class="capabilities__grid">
@@ -27,18 +30,23 @@ import { siteConfig } from '../config/site.config';
         </article>
       ))}
     </div>
+    <p class="capabilities__more">
+      También configuramos herramientas como Microsoft 365 o Google Workspace, y
+      evaluamos conexiones con puntos de venta, marketplaces, facturación y
+      herramientas de inteligencia artificial cuando aportan a tu operación.
+    </p>
   </div>
 </section>
 
 <style>
   .capabilities__grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     border-block: 1px solid var(--color-border);
     border-inline-start: 1px solid var(--color-border);
   }
   .capability {
-    min-height: 15rem;
+    min-height: 13rem;
     padding: clamp(1.25rem, 3vw, 2rem);
     border-inline-end: 1px solid var(--color-border);
     border-block-end: 1px solid var(--color-border);
@@ -46,7 +54,7 @@ import { siteConfig } from '../config/site.config';
   }
   .capability__number {
     display: block;
-    margin-block-end: 3rem;
+    margin-block-end: 1.75rem;
     color: var(--color-blue-dark);
     font-family: var(--font-heading);
     font-size: 0.75rem;
@@ -57,10 +65,10 @@ import { siteConfig } from '../config/site.config';
     margin-block-end: 0;
     color: var(--color-muted);
   }
-  @media (max-width: 52rem) {
-    .capabilities__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+  .capabilities__more {
+    max-width: 52rem;
+    margin: 1.75rem 0 0;
+    color: var(--color-muted);
   }
   @media (max-width: 36rem) {
     .capabilities__grid {

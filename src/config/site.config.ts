@@ -2,109 +2,109 @@ export const siteConfig = {
   brand: {
     name: 'MM Dev',
     legalName: 'Manuel Matus Development SpA',
-    tagline: 'Tecnología diseñada para operar, integrarse y crecer.',
+    tagline: 'Tecnología clara para trabajar mejor.',
     locale: 'es-CL',
     country: 'Chile',
   },
   siteUrl: 'https://mmdev.cl',
   navigation: [
-    { label: 'Capacidades', href: '/#capacidades' },
+    { label: 'Qué hacemos', href: '/#capacidades' },
     { label: 'Cómo trabajamos', href: '/#metodo' },
-    { label: 'Empresa', href: '/#empresa' },
+    { label: 'Nuestra forma de trabajar', href: '/#empresa' },
     { label: 'Contacto', href: '/#contacto' },
   ],
   hero: {
-    eyebrow: 'Manuel Matus Development SpA',
-    title: 'Tecnología diseñada para operar, integrarse y crecer.',
+    eyebrow: 'Desarrollo de software e infraestructura digital',
+    title: 'La tecnología de tu empresa, bien resuelta.',
     description:
-      'Diseñamos software, plataformas web e infraestructura digital para empresas que necesitan soluciones claras, seguras y sostenibles.',
-    primaryAction: { label: 'Conversemos', href: '/#contacto' },
-    secondaryAction: { label: 'Conocer capacidades', href: '/#capacidades' },
-    signalTitle: 'Ingeniería aplicada al negocio',
+      'Desarrollamos software, conectamos tus sistemas y nos hacemos cargo de la infraestructura que necesitas para trabajar. Partimos de lo que ya tienes y construimos contigo el siguiente paso.',
+    primaryAction: { label: 'Cuéntanos qué necesitas', href: '/#contacto' },
+    secondaryAction: { label: 'Explora lo que hacemos', href: '/#capacidades' },
+    signalTitle: 'Un ejemplo concreto',
     signalDescription:
-      'Implementación documentada, activos bajo control y continuidad técnica desde el primer despliegue.',
+      'Tu inventario, tienda en línea y punto de venta pueden compartir información sin que tu equipo copie datos a mano.',
   },
   capabilities: [
     {
       number: '01',
-      title: 'Software e integraciones',
+      title: 'Software para tu operación',
       description:
-        'Desarrollo backend, automatización e integración entre sistemas para resolver procesos concretos.',
+        'Creamos aplicaciones y herramientas a medida cuando lo que existe no resuelve tu forma de trabajar.',
     },
     {
       number: '02',
-      title: 'Sitios y plataformas web',
+      title: 'Sitios web y ventas en línea',
       description:
-        'Experiencias web rápidas, accesibles y preparadas para crecer junto con la operación.',
+        'Desde una página de presentación hasta una tienda conectada con tu inventario y tus medios de pago.',
     },
     {
       number: '03',
-      title: 'Sistemas empresariales',
+      title: 'Inventario y gestión',
       description:
-        'Implementación y adaptación de plataformas para inventario, operación y gestión comercial.',
+        'Implementamos sistemas para ordenar productos, ventas y procesos, con espacio para crecer junto a tu empresa.',
     },
     {
       number: '04',
-      title: 'Automatización de procesos',
+      title: 'Integraciones y automatización',
       description:
-        'Flujos reproducibles que reducen tareas manuales, errores y dependencia operacional.',
+        'Conectamos plataformas, pagos y canales de venta para reducir el trabajo repetitivo y los datos duplicados.',
     },
     {
       number: '05',
-      title: 'Dominios, DNS y correo',
+      title: 'Dominios y correo corporativo',
       description:
-        'Configuración y gobierno de activos digitales críticos con propiedad y recuperación claras.',
+        'Te ayudamos a registrar y administrar tu dominio, crear correos profesionales y mantener el control de tus cuentas.',
     },
     {
       number: '06',
-      title: 'Infraestructura y continuidad',
+      title: 'Servidores y modernización',
       description:
-        'Despliegues versionados, respaldos y controles técnicos orientados a una operación sostenible.',
+        'Alojamos y administramos servicios o trabajamos sobre tu infraestructura. También migramos sistemas antiguos y datos dispersos.',
     },
   ],
   method: [
     {
       number: '01',
-      title: 'Entender',
+      title: 'Escuchar y revisar',
       description:
-        'Levantamos el contexto, las restricciones y el resultado que realmente necesita el negocio.',
+        'Conversamos contigo y revisamos tus herramientas, procesos y prioridades antes de proponer cambios.',
     },
     {
       number: '02',
-      title: 'Diseñar',
+      title: 'Acordar un plan',
       description:
-        'Definimos alcance, arquitectura, riesgos, responsabilidades y criterios de aceptación.',
+        'Definimos qué resolver primero, qué puedes aprovechar y cuánto costarán el proyecto y su operación.',
     },
     {
       number: '03',
-      title: 'Implementar',
+      title: 'Construir y conectar',
       description:
-        'Construimos de forma versionada, verificable y separada de los datos sensibles.',
+        'Desarrollamos, configuramos e integramos las piezas necesarias, explicando las decisiones importantes.',
     },
     {
       number: '04',
-      title: 'Validar y continuar',
+      title: 'Entregar y acompañar',
       description:
-        'Probamos, documentamos y dejamos una ruta clara de soporte, recuperación y evolución.',
+        'Probamos contigo el resultado y dejamos tus accesos, información y próximos pasos claramente identificados.',
     },
   ],
   company: {
-    eyebrow: 'Empresa',
-    title: 'Una contraparte técnica para decisiones que deben perdurar.',
+    eyebrow: 'Quién está detrás',
+    title: 'Experiencia técnica, trato directo y cuentas claras.',
     description:
-      'MM Dev es la línea tecnológica de Manuel Matus Development SpA. Combinamos desarrollo, infraestructura e integración para entregar soluciones mantenibles y conectadas con la realidad operacional de cada empresa.',
+      'Soy Manuel Matus, desarrollador de software con 10 años de experiencia en sistemas, integraciones y automatización. Creé MM Dev para poner ese trabajo al alcance de empresas que necesitan una persona con quien hablar y una solución que puedan entender y controlar.',
     principles: [
-      'Propiedad clara de dominios, cuentas y activos.',
-      'Código y despliegues bajo control de versiones.',
-      'Seguridad y recuperación consideradas desde el diseño.',
-      'Documentación útil para operar y evolucionar.',
+      'Tu marca, dominio, cuentas y datos deben estar bajo tu control.',
+      'Te explicamos los costos iniciales y recurrentes antes de avanzar.',
+      'Evaluamos opciones de código abierto y de menor costo cuando cumplen lo que necesitas.',
+      'Trabajamos con seguridad, respaldos y documentación acordes a cada proyecto.',
     ],
   },
   contact: {
     email: 'contacto@mmdev.cl',
-    title: 'Cuéntenos qué necesita resolver.',
+    title: 'Cuéntanos qué te gustaría mejorar.',
     description:
-      'Comparta el contexto de su empresa y la necesidad principal. Revisaremos la consulta y responderemos desde nuestro canal corporativo.',
+      'No necesitas tener la solución definida. Describe tu situación con tus palabras y conversemos sobre el primer paso.',
     serviceOptions: [
       'Desarrollo de software',
       'Sitio o plataforma web',
@@ -112,13 +112,13 @@ export const siteConfig = {
       'Automatización e integraciones',
       'Dominios, DNS o correo',
       'Infraestructura y continuidad',
-      'Necesito orientación',
+      'Otra consulta o necesito orientación',
     ],
   },
   seo: {
-    title: 'MM Dev | Desarrollo de software e infraestructura digital',
+    title: 'MM Dev | Software, integraciones e infraestructura para empresas',
     description:
-      'Desarrollo de software, plataformas web, automatización, integración de sistemas e infraestructura digital para empresas en Chile.',
+      'Desarrollamos software, conectamos sistemas y ordenamos la tecnología de tu empresa. Trabajo cercano, costos claros y control de tus activos digitales en Chile.',
     socialImage: '/og-image.png',
   },
 } as const;

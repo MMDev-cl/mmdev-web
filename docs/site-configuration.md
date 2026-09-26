@@ -26,7 +26,7 @@ Activos:
 - `public/og-image.png`: imagen para redes y mensajería;
 - `public/og-image.svg`: fuente editable de la imagen social.
 
-Las fuentes se distribuyen desde los paquetes Fontsource y se empaquetan durante el build. No se consultan servidores de Google Fonts en producción.
+La fuente de cuerpo se distribuye desde Fontsource y se empaqueta durante el build. Los títulos usan Georgia con una alternativa serif del sistema. No se consultan servidores de Google Fonts en producción.
 
 ## Medición consentida
 
@@ -74,14 +74,14 @@ No se autorizan dominios de Google Ads, DoubleClick ni Tag Assistant. La impleme
 1. Borrar la clave `mmdev.measurement-consent` y las cookies `_ga` existentes.
 2. Recargar y verificar que aparece la interfaz y no hay solicitudes a `googletagmanager.com` ni `google-analytics.com`.
 3. Rechazar, recargar y confirmar que GTM sigue sin descargarse.
-4. Reabrir desde **Preferencias de privacidad**, aceptar y confirmar que se solicita una sola vez `gtm.js?id=GTM-M9CZ2JMS`.
+4. Reabrir desde **Configurar cookies**, aceptar y confirmar que se solicita una sola vez `gtm.js?id=GTM-M9CZ2JMS`.
 5. Verificar en el estado de consentimiento que sólo `analytics_storage` está en `granted`.
 6. Reabrir, rechazar y comprobar la eliminación de cookies accesibles y la recarga de la página.
 7. Confirmar después de la recarga que no se vuelve a solicitar GTM.
 8. Abrir una segunda pestaña y comprobar la propagación de aceptación y rechazo.
 9. Probar los controles con teclado y lector de pantalla.
 
-La etiqueta GA4 todavía debe crearse, probarse y publicarse dentro de GTM. Hasta completar esa configuración externa, aceptar la analítica carga el contenedor pero no habilita medición GA4 por sí mismo.
+La etiqueta GA4 se configuró y validó dentro de GTM. Mantener esa configuración externa; no duplicar la medición directamente en el sitio.
 
 ## Formulario
 
@@ -98,6 +98,7 @@ Variables de Cloudflare Pages:
 | `CONTACT_TO_EMAIL`          | Variable          | Destino; normalmente `contacto@mmdev.cl`        |
 
 El formulario permanece deshabilitado si no existe la clave pública Turnstile. El endpoint rechaza envíos si faltan los secretos.
+Nombre, correo, mensaje y autorización para responder son obligatorios; teléfono y tipo de consulta son opcionales. Ejecutar `npm run verify:contact` para verificar el contrato entre el formulario y el endpoint.
 
 ## Validación
 
