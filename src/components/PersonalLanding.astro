@@ -10,15 +10,11 @@ const year = new Date().getUTCFullYear();
 <main class="personal-layout" id="contenido-principal">
   <aside class="personal-intro" aria-labelledby="personal-name">
     <div class="personal-intro__top">
-      <a
-        class="personal-intro__wordmark"
-        href="/"
-        aria-label="Manuel Matus, inicio"
-      >
+      <a class="personal-intro__wordmark" href="/" aria-label="M.dev, inicio">
         <span class="personal-intro__symbol" aria-hidden="true">
           M.
         </span>
-        <span>Manuel Matus</span>
+        <span>dev</span>
       </a>
       <div class="personal-intro__identity">
         {person.portrait ? (
@@ -106,8 +102,9 @@ const year = new Date().getUTCFullYear();
   .personal-intro__wordmark {
     display: inline-flex;
     align-items: center;
-    gap: 0.7rem;
+    gap: 0.45rem;
     width: fit-content;
+    font-size: 1.2rem;
     font-weight: 700;
     text-decoration: none;
   }
@@ -119,12 +116,12 @@ const year = new Date().getUTCFullYear();
   }
   .personal-intro__symbol {
     display: grid;
-    width: 2rem;
-    height: 2rem;
+    width: 2.7rem;
+    height: 2.7rem;
     place-items: center;
     border: 1px solid var(--color-accent);
     color: var(--color-accent);
-    font-size: 1.1rem;
+    font-size: 1.4rem;
   }
   .personal-intro__identity {
     display: flex;

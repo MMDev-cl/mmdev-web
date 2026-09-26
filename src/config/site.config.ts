@@ -4,7 +4,7 @@ export const siteConfig = {
     role: 'Desarrollador Full-Stack',
     specialty: 'Servicios de asesoría informática personalizada',
     introduction:
-      'Soy desarrollador de software con 10 años de experiencia en integración, automatización y arquitectura de sistemas. Ayudo a empresas y personas a resolver desafíos tecnológicos con soluciones claras y adaptadas a su realidad.',
+      'Desarrollador de software con 10 años de experiencia en integración, automatización y arquitectura de sistemas. Colaboro con personas y empresas para resolver desafíos tecnológicos con soluciones claras y adaptadas a su realidad.',
     portrait: '',
     github: 'https://github.com/Manutarita',
     linkedin: '',

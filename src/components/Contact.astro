@@ -8,13 +8,6 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
   <p class="contact__eyebrow">Contacto directo</p>
   <h2 id="contact-title">{siteConfig.contact.title}</h2>
   <p class="contact__lead">{siteConfig.contact.description}</p>
-  <p class="contact__alternative">
-    También puedes escribir directamente a{' '}
-    <a href={`mailto:${siteConfig.contact.email}`}>
-      {siteConfig.contact.email}
-    </a>
-    .
-  </p>
   <form
     class="contact-form"
     action="/api/contact"
@@ -95,16 +88,15 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         data-theme="dark"
         data-action="contact"
       ></div>
-    ) : (
-      <p class="contact-form__setup" role="note">
-        El envío web se habilitará al configurar la protección antispam.
-        Mientras tanto puede escribir a{' '}
-        <a href={`mailto:${siteConfig.contact.email}`}>
-          {siteConfig.contact.email}
-        </a>
-        .
-      </p>
-    )}
+    ) : null}
+
+    <p class="contact-form__alternative">
+      También puedes escribir directamente a{' '}
+      <a href={`mailto:${siteConfig.contact.email}`}>
+        {siteConfig.contact.email}
+      </a>
+      .
+    </p>
 
     <div class="contact-form__footer">
       <button
@@ -209,20 +201,12 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     color: var(--color-muted);
     font-size: 1.08rem;
   }
-  .contact__alternative {
-    margin-bottom: 2.5rem;
-    color: var(--color-muted);
-    font-size: 0.95rem;
-  }
-  .contact__alternative a {
-    color: var(--color-highlight);
-    text-underline-offset: 0.25rem;
-  }
   .contact-form {
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 1.3rem;
+    margin-top: 2.5rem;
   }
   .contact-form__field {
     display: grid;
@@ -240,7 +224,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
   }
   .contact-form__field--wide,
   .contact-form__consent,
-  .contact-form__setup,
+  .contact-form__alternative,
   .cf-turnstile,
   .contact-form__footer {
     grid-column: 1 / -1;
@@ -305,16 +289,14 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     height: 1px;
     clip-path: inset(50%);
   }
-  .contact-form__setup {
+  .contact-form__alternative {
     margin: 0;
-    padding: 0.9rem;
-    border-left: 2px solid var(--color-accent);
-    background: var(--color-panel);
     color: var(--color-muted);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
-  .contact-form__setup a {
+  .contact-form__alternative a {
     color: var(--color-highlight);
+    text-underline-offset: 0.25rem;
   }
   .contact-form__footer {
     display: flex;
