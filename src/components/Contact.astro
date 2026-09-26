@@ -5,11 +5,11 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
 
 <section class="contact" id="contacto" aria-labelledby="contact-title">
-  <p class="contact__eyebrow">Contacto directo / 01</p>
+  <p class="contact__eyebrow">Contacto directo</p>
   <h2 id="contact-title">{siteConfig.contact.title}</h2>
   <p class="contact__lead">{siteConfig.contact.description}</p>
   <p class="contact__alternative">
-    También puedes escribirme a{' '}
+    También puedes escribir directamente a{' '}
     <a href={`mailto:${siteConfig.contact.email}`}>
       {siteConfig.contact.email}
     </a>
@@ -22,37 +22,38 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     data-contact-form
   >
     <div class="contact-form__field">
-      <label for="name">Tu nombre</label>
+      <label for="name">Nombre</label>
       <input
         id="name"
         name="name"
         type="text"
         autocomplete="name"
         maxlength="100"
+        placeholder="Nombre"
         required
       />
     </div>
     <div class="contact-form__field">
-      <label for="email">Tu correo</label>
+      <label for="email">Correo</label>
       <input
         id="email"
         name="email"
         type="email"
         autocomplete="email"
         maxlength="160"
+        placeholder="Correo"
         required
       />
     </div>
     <div class="contact-form__field">
-      <label for="phone">
-        Teléfono <span>(si prefieres que te llamemos)</span>
-      </label>
+      <label for="phone">Teléfono (opcional)</label>
       <input
         id="phone"
         name="phone"
         type="tel"
         autocomplete="tel"
         maxlength="40"
+        placeholder="Teléfono (opcional)"
       />
     </div>
     <div class="contact-form__field contact-form__field--wide">
@@ -220,12 +221,22 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
   .contact-form {
     position: relative;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
     gap: 1.3rem;
   }
   .contact-form__field {
     display: grid;
     gap: 0.45rem;
+  }
+  .contact-form__field:not(.contact-form__field--wide) label {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    border: 0;
+    white-space: nowrap;
+    clip-path: inset(50%);
   }
   .contact-form__field--wide,
   .contact-form__consent,

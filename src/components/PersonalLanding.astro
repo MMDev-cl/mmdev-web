@@ -1,5 +1,6 @@
 ---
 import Contact from './Contact.astro';
+import SocialIcon from './SocialIcon.astro';
 import { siteConfig } from '../config/site.config';
 
 const { person, contact, brand } = siteConfig;
@@ -48,29 +49,25 @@ const year = new Date().getUTCFullYear();
     </div>
     <nav class="personal-intro__links" aria-label="Enlaces de Manuel Matus">
       <a href={person.github} target="_blank" rel="noopener noreferrer">
-        GitHub <span aria-hidden="true">↗</span>
+        <SocialIcon name="github" /> GitHub
       </a>
       {person.linkedin && (
         <a href={person.linkedin} target="_blank" rel="noopener noreferrer">
-          LinkedIn <span aria-hidden="true">↗</span>
+          <SocialIcon name="linkedin" /> LinkedIn
         </a>
       )}
       {person.instagram && (
         <a href={person.instagram} target="_blank" rel="noopener noreferrer">
-          Instagram <span aria-hidden="true">↗</span>
+          <SocialIcon name="instagram" /> Instagram
         </a>
       )}
       <a href={`mailto:${contact.email}`}>
-        Correo <span aria-hidden="true">↗</span>
+        <SocialIcon name="email" /> Correo
       </a>
     </nav>
   </aside>
 
   <div class="personal-content">
-    <div class="personal-content__top" aria-hidden="true">
-      <span>Disponible para conversar</span>
-      <span>Desde Chile · En remoto</span>
-    </div>
     <Contact />
     <footer class="personal-content__footer">
       <span>© {year} Manuel Matus</span>
@@ -114,6 +111,12 @@ const year = new Date().getUTCFullYear();
     font-weight: 700;
     text-decoration: none;
   }
+  .personal-intro__top {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+  }
   .personal-intro__symbol {
     display: grid;
     width: 2rem;
@@ -124,13 +127,19 @@ const year = new Date().getUTCFullYear();
     font-size: 1.1rem;
   }
   .personal-intro__identity {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-block: auto;
     padding-block: 3rem;
+    text-align: center;
   }
   .personal-intro__portrait {
     display: grid;
     width: 6rem;
     height: 6rem;
     margin-bottom: 2.5rem;
+    margin-inline: auto;
     border: 2px solid var(--color-accent);
     border-radius: 50%;
     object-fit: cover;
@@ -175,9 +184,13 @@ const year = new Date().getUTCFullYear();
   .personal-intro__links {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 1.15rem 1.6rem;
   }
   .personal-intro__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     color: var(--color-main);
     font-size: 0.9rem;
     text-decoration-color: var(--color-accent);
@@ -192,22 +205,6 @@ const year = new Date().getUTCFullYear();
     min-width: 0;
     flex-direction: column;
     padding-block: 3rem 2.5rem;
-  }
-  .personal-content__top {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    color: var(--color-muted);
-    font-size: 0.8rem;
-  }
-  .personal-content__top span:first-child::before {
-    display: inline-block;
-    width: 0.5rem;
-    height: 0.5rem;
-    margin-right: 0.5rem;
-    border-radius: 50%;
-    background: var(--color-accent);
-    content: '';
   }
   .personal-content__footer {
     display: flex;
@@ -261,9 +258,6 @@ const year = new Date().getUTCFullYear();
     }
     .personal-content {
       padding-block: 2.5rem 2rem;
-    }
-    .personal-content__top {
-      display: none;
     }
   }
 </style>

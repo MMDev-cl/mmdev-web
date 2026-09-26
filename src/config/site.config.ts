@@ -19,8 +19,7 @@ export const siteConfig = {
   contact: {
     email: 'contacto@mmdev.cl',
     title: '¿Buscas asesoría informática?',
-    description:
-      'Cuéntame qué necesitas. Podemos partir con una conversación sencilla y ver juntos cómo avanzar.',
+    description: 'Cuéntame qué necesitas.',
   },
   seo: {
     title: 'Manuel Matus | Desarrollador Full-Stack y asesoría informática',
