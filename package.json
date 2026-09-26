@@ -10,7 +10,8 @@
     "format:check": "prettier --check .",
     "preview": "astro preview",
     "verify:measurement": "node scripts/verify-measurement.mjs",
-    "validate": "npm run format:check && npm run check && npm run build && npm run verify:measurement"
+    "verify:contact": "node --experimental-strip-types scripts/verify-contact.mjs",
+    "validate": "npm run format:check && npm run check && npm run build && npm run verify:measurement && npm run verify:contact"
   },
   "repository": {
     "type": "git",

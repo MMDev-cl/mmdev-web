@@ -9,7 +9,7 @@
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
 
-/favicon.svg
+/favicon-mdev.svg
   Cache-Control: public, max-age=86400
 
 /og-image.png

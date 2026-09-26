@@ -25,16 +25,15 @@ import { measurementConfig } from '../config/measurement.config';
       ×
     </button>
     <div>
-      <p class="eyebrow">Privacidad</p>
       <h2 id="privacy-preferences-title" tabindex="-1">
-        Analítica opcional
+        Tu privacidad, tu decisión
       </h2>
       <p id="privacy-preferences-description">
-        Podemos activar analítica para obtener métricas agregadas de navegación
-        y rendimiento. No activamos publicidad, remarketing ni personalización.
-        Puede cambiar esta decisión posteriormente.
+        Si aceptas, usamos cookies para saber cómo se utiliza el sitio y
+        mejorarlo. Si rechazas, puedes seguir navegando igual. Puedes cambiar de
+        opinión cuando quieras.
       </p>
-      <a href="/privacidad/">Leer el aviso de privacidad</a>
+      <a href="/privacidad/">Cómo cuidamos tus datos</a>
     </div>
     <div class="privacy-preferences__actions">
       <button
@@ -42,7 +41,7 @@ import { measurementConfig } from '../config/measurement.config';
         type="button"
         data-analytics-consent="granted"
       >
-        Aceptar analítica
+        Aceptar
       </button>
       <button
         class="button button--secondary"
@@ -94,7 +93,7 @@ import { measurementConfig } from '../config/measurement.config';
     preferences.hidden = false;
     if (closeButton) closeButton.hidden = !hasPersistedDecision();
     if (status) status.textContent = '';
-    firstConsentButton?.focus({ preventScroll: true });
+    if (returnFocus) firstConsentButton?.focus({ preventScroll: true });
   };
 
   const closePreferences = () => {
@@ -109,7 +108,7 @@ import { measurementConfig } from '../config/measurement.config';
     openPreferences(false);
     if (status) {
       status.textContent =
-        'No pudimos guardar su decisión. La analítica permanece desactivada durante esta sesión.';
+        'No pudimos guardar tu decisión. La medición sigue desactivada durante esta sesión.';
     }
   };
 
@@ -172,11 +171,11 @@ import { measurementConfig } from '../config/measurement.config';
     position: fixed;
     z-index: 50;
     inset: auto 1rem 1rem;
-    max-width: 48rem;
+    max-width: 66rem;
     margin-inline: auto;
     border: 1px solid var(--color-border);
     background: var(--color-surface);
-    box-shadow: 0 1rem 3rem rgb(11 24 41 / 18%);
+    box-shadow: 0 0.5rem 2rem rgb(23 45 52 / 16%);
   }
   .privacy-preferences[hidden] {
     display: none;
@@ -185,19 +184,16 @@ import { measurementConfig } from '../config/measurement.config';
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: 1rem 2rem;
-    padding: clamp(1.25rem, 4vw, 2rem);
+    gap: 0.25rem 1.5rem;
+    padding: 1rem 1.25rem;
   }
   .privacy-preferences h2 {
-    margin-block-end: 0.75rem;
-    font-size: clamp(1.5rem, 4vw, 2rem);
+    margin-block-end: 0.25rem;
+    font-size: 1.35rem;
   }
   .privacy-preferences p {
-    margin-block-end: 0.75rem;
+    margin-block-end: 0.25rem;
     color: var(--color-muted);
-  }
-  .privacy-preferences .eyebrow {
-    color: var(--color-blue-dark);
   }
   .privacy-preferences a {
     color: var(--color-blue-dark);
@@ -218,10 +214,12 @@ import { measurementConfig } from '../config/measurement.config';
     line-height: 1;
   }
   .privacy-preferences__actions {
-    display: grid;
-    min-width: 12rem;
-    gap: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 14rem;
+    gap: 0.5rem;
     align-content: center;
+    align-items: center;
   }
   .privacy-preferences__status {
     grid-column: 1 / -1;
@@ -229,7 +227,7 @@ import { measurementConfig } from '../config/measurement.config';
     color: var(--color-error);
     font-size: 0.875rem;
   }
-  @media (max-width: 40rem) {
+  @media (max-width: 48rem) {
     .privacy-preferences {
       inset: auto 0 0;
       border-inline: 0;
@@ -237,10 +235,19 @@ import { measurementConfig } from '../config/measurement.config';
     }
     .privacy-preferences__content {
       grid-template-columns: 1fr;
+    }
+    .privacy-preferences__content:has(
+      .privacy-preferences__close:not([hidden])
+    ) {
       padding-inline-end: 3.5rem;
     }
     .privacy-preferences__actions {
       min-width: 0;
+      padding-inline-end: 0;
+    }
+    .privacy-preferences__actions .button {
+      width: auto;
+      min-width: 7rem;
     }
   }
 </style>

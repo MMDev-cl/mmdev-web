@@ -8,7 +8,6 @@ interface Env {
 interface ContactPayload {
   name: string;
   email: string;
-  company: string;
   phone: string;
   service: string;
   message: string;
@@ -70,7 +69,6 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const payload: ContactPayload = {
     name: readText(input.name, 100),
     email: readText(input.email, 160).toLowerCase(),
-    company: readText(input.company, 120),
     phone: readText(input.phone, 40),
     service: readText(input.service, 100),
     message: readText(input.message, 3000),
@@ -88,9 +86,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   if (
     payload.name.length < 2 ||
     !isEmail(payload.email) ||
-    payload.company.length < 2 ||
-    !payload.service ||
-    payload.message.length < 20 ||
+    payload.message.length < 10 ||
     payload.consent !== 'on'
   ) {
     return json(
@@ -141,9 +137,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const safe = {
     name: escapeHtml(payload.name),
     email: escapeHtml(payload.email),
-    company: escapeHtml(payload.company),
     phone: escapeHtml(payload.phone || 'No informado'),
-    service: escapeHtml(payload.service),
+    service: escapeHtml(payload.service || 'No especificado'),
     message: escapeHtml(payload.message).replaceAll('\n', '<br />'),
   };
 
@@ -157,20 +152,18 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       from: env.CONTACT_FROM_EMAIL,
       to: [env.CONTACT_TO_EMAIL || 'contacto@mmdev.cl'],
       reply_to: payload.email,
-      subject: `[mmdev.cl] ${payload.service} — ${payload.company}`,
+      subject: `[mmdev.cl] Nueva consulta${payload.service ? ` — ${payload.service.replace(/[\r\n]/g, ' ')}` : ''}`,
       text: [
         `Nombre: ${payload.name}`,
         `Correo: ${payload.email}`,
-        `Empresa: ${payload.company}`,
         `Teléfono: ${payload.phone || 'No informado'}`,
-        `Área: ${payload.service}`,
+        `Área: ${payload.service || 'No especificado'}`,
         '',
         payload.message,
       ].join('\n'),
       html: `<h2>Nueva consulta desde mmdev.cl</h2>
         <p><strong>Nombre:</strong> ${safe.name}</p>
         <p><strong>Correo:</strong> ${safe.email}</p>
-        <p><strong>Empresa:</strong> ${safe.company}</p>
         <p><strong>Teléfono:</strong> ${safe.phone}</p>
         <p><strong>Área:</strong> ${safe.service}</p>
         <hr />

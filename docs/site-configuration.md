@@ -1,4 +1,4 @@
-# Configuración del sitio MM Dev
+# Configuración del sitio personal de Manuel Matus
 
 La identidad, el contenido y los servicios externos se mantienen separados de los componentes.
 
@@ -6,13 +6,9 @@ La identidad, el contenido y los servicios externos se mantienen separados de lo
 
 Editar `src/config/site.config.ts` para modificar:
 
-- nombre y razón social;
-- navegación;
-- presentación principal;
-- capacidades;
-- método de trabajo;
-- principios empresariales;
-- correo y opciones del formulario;
+- identidad personal, retrato y enlaces sociales;
+- razón social a cargo de los servicios y datos;
+- correo y presentación del formulario;
 - título, descripción e imagen social.
 
 ## Identidad visual
@@ -21,12 +17,11 @@ Editar `src/styles/tokens.css` para modificar colores, tipografías, radios y an
 
 Activos:
 
-- `public/brand/mark.svg`: símbolo principal;
-- `public/favicon.svg`: icono del navegador;
+- `public/favicon-mdev.svg`: icono del navegador;
 - `public/og-image.png`: imagen para redes y mensajería;
 - `public/og-image.svg`: fuente editable de la imagen social.
 
-Las fuentes se distribuyen desde los paquetes Fontsource y se empaquetan durante el build. No se consultan servidores de Google Fonts en producción.
+Las fuentes de cuerpo y títulos se distribuyen desde Fontsource y se empaquetan durante el build. No se consultan servidores de Google Fonts en producción.
 
 ## Medición consentida
 
@@ -74,14 +69,14 @@ No se autorizan dominios de Google Ads, DoubleClick ni Tag Assistant. La impleme
 1. Borrar la clave `mmdev.measurement-consent` y las cookies `_ga` existentes.
 2. Recargar y verificar que aparece la interfaz y no hay solicitudes a `googletagmanager.com` ni `google-analytics.com`.
 3. Rechazar, recargar y confirmar que GTM sigue sin descargarse.
-4. Reabrir desde **Preferencias de privacidad**, aceptar y confirmar que se solicita una sola vez `gtm.js?id=GTM-M9CZ2JMS`.
+4. Reabrir desde **Configurar cookies**, aceptar y confirmar que se solicita una sola vez `gtm.js?id=GTM-M9CZ2JMS`.
 5. Verificar en el estado de consentimiento que sólo `analytics_storage` está en `granted`.
 6. Reabrir, rechazar y comprobar la eliminación de cookies accesibles y la recarga de la página.
 7. Confirmar después de la recarga que no se vuelve a solicitar GTM.
 8. Abrir una segunda pestaña y comprobar la propagación de aceptación y rechazo.
 9. Probar los controles con teclado y lector de pantalla.
 
-La etiqueta GA4 todavía debe crearse, probarse y publicarse dentro de GTM. Hasta completar esa configuración externa, aceptar la analítica carga el contenedor pero no habilita medición GA4 por sí mismo.
+La etiqueta GA4 se configuró y validó dentro de GTM. Mantener esa configuración externa; no duplicar la medición directamente en el sitio.
 
 ## Formulario
 
@@ -98,6 +93,7 @@ Variables de Cloudflare Pages:
 | `CONTACT_TO_EMAIL`          | Variable          | Destino; normalmente `contacto@mmdev.cl`        |
 
 El formulario permanece deshabilitado si no existe la clave pública Turnstile. El endpoint rechaza envíos si faltan los secretos.
+Nombre, correo, mensaje y autorización para responder son obligatorios; teléfono es opcional. Ejecutar `npm run verify:contact` para verificar el contrato entre el formulario y el endpoint. Los enlaces sociales sin URL se ocultan hasta que se configuren; `portrait` muestra las iniciales hasta añadir una foto real.
 
 ## Validación
 
