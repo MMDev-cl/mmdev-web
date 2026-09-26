@@ -1,18 +1,34 @@
-<header class="simple-header container">
-  <a href="/" aria-label="Volver al sitio de Manuel Matus">
-    ← Manuel Matus
+---
+import BrandMark from './BrandMark.astro';
+---
+
+<header class="simple-header">
+  <BrandMark />
+  <a class="simple-header__back" href="/">
+    ← Inicio
   </a>
 </header>
 <style>
   .simple-header {
-    padding-block: 2rem;
+    display: flex;
+    width: min(100% - 4rem, 82rem);
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-inline: auto;
+    padding-top: 2rem;
   }
-  .simple-header a {
+  .simple-header__back {
     color: var(--color-highlight);
     font-weight: 700;
     text-decoration: none;
   }
-  .simple-header a:hover {
+  .simple-header__back:hover {
     text-decoration: underline;
+  }
+  @media (max-width: 56rem) {
+    .simple-header {
+      width: min(100% - 2.5rem, 42rem);
+    }
   }
 </style>
